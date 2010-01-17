@@ -1,0 +1,23 @@
+<div class="post">
+<h1 class="title">New encoding task</h1>
+<div class="entry">
+
+
+<% unless @encoding_task.errors.empty? %>
+  <div class="errors">
+    <h2>Errors on Encoding Task</h2>
+    <ul>
+    <% @encoding_task.errors.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<p>Create a new encoding task for this encoder</p>
+<form action="/encoding_tasks/<%= @encoding_task.encoder.id %>" method="POST">
+  <%= partial(:"encoding_tasks/form")%>
+</form>
+
+</div>
+</div>

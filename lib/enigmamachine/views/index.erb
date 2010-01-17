@@ -1,0 +1,13 @@
+<div class="post">
+	<h1 class="title">Your enigma machine</h1>
+	<div class="entry">
+		<p>It is encoding some videos.</p>
+		<% unless @videos.empty? %>
+		    <p>Here are the next videos which will be encoded:</p>
+		    <ul>
+                <%= partial :'videos/video', :collection => @videos %>
+            </ul>
+        <% end %>
+	</div>
+</div>
+

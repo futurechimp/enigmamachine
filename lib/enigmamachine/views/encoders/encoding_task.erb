@@ -1,0 +1,5 @@
+<% task = encoders_encoding_task %>
+<div id="task<%= task.id %>">
+<strong><%= task.name %>:</strong> ffmpeg <%= task.command %> :: <i><%= task.output_file_suffix %></i> suffix :: <a href="/encoding_tasks/<%= task.id%>/edit">edit</a> destroy
+</div>
+

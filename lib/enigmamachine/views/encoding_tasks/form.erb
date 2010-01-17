@@ -1,0 +1,12 @@
+  <p><strong>Name:</strong>
+  <input name="encoding_task[name]" id="encoding_task_name" value="<%= @encoding_task.name %>" ></input></p> 
+  
+  <p><strong>Output file suffix:</strong>
+  <input name="encoding_task[output_file_suffix]" id="encoding_task_output_file_suffix" value="<%= @encoding_task.output_file_suffix %>" ></input></p>   
+  
+  <p><strong>Encoding command:</strong><br/>
+  <input name="encoding_task[command]" id="encoding_task_command" value="<%= @encoding_task.command %>" size="70"></input></p>    
+
+  <input type="submit" value="Save"/> 
+  <p><a href="/encoders/<%= @encoding_task.encoder.id %>">cancel</a></p>
+
