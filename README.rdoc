@@ -1,6 +1,21 @@
 = enigmamachine
 
-Description goes here.
+Enigmamachine is a video processor which queues and encodes videos according
+to target profiles that you define.  Videos must be on a locally mounted
+filesystem.  The processor takes the path to the video, and executes
+multiple ffmpeg commands on the video.  There is a handy web interface for
+defining encoding tasks, and a restful web service which takes encoding commands.
+
+Enigmamachine is written using Sinatra, Thin, and Eventmachine.
+
+== Current Status
+
+The basic Sinatra application and the encoding queue work, but the app needs to
+be packaged up as a gem and all the niceties of running the server need to be
+made more convenient.
+
+The biggest problem is that it was done on a whim (i.e. without test-first
+development) since it was just a sketch at first - this needs to be fixed.
 
 == Note on Patches/Pull Requests
 
