@@ -1,20 +1,4 @@
-# A task which defines how a video will be encoded.
-#
-class EncodingTask
-  include DataMapper::Resource
-
-  # Properties
-  #
-  property :id, Serial, :key => true
-  property :name, String, :required => true, :length => (1..254)
-  property :output_file_suffix, String, :required => true, :length => (1..254)
-  property :command, String, :required => true, :length => (1..254)
-
-  # Associations
-  #
-  belongs_to :encoder
-
-end
+require File.dirname(__FILE__) + '/video'
 
 # An encoding profile which can be applied to a video.  It has a name and is
 # composed of a bunch of EncodingTasks.
@@ -24,12 +8,12 @@ class Encoder
 
   # Properties
   #
-  property :id, Serial, :key => true
+  property :id, Serial
   property :name, String, :required => true, :length => (1..254)
 
   # Associations
   #
-  has n, :encoding_tasks, :order => [:id.desc]
+  has n, :encoding_tasks
 
   # This is a candidate for being moved into the class Encoders::Video (which
   # could happily be renamed as something like Encoders::Ffmpeg).
@@ -63,42 +47,6 @@ class Encoder
       end
     }
     EventMachine.defer(encoding_operation, completion_callback)
-  end
-
-end
-
-
-# A video which we want to encode.
-#
-class Video
-  include DataMapper::Resource
-
-  # Properties
-  #
-  property :id, Serial, :key => true
-  property :file, String,  :required => true, :length => (1..254)
-  property :state, String, :required => true,
-    :length => (1..10), :default => 'unencoded'
-  property :created_at, DateTime
-  property :updated_at, DateTime
-  property :encoder_id, Integer, :required => true
-
-  belongs_to :encoder
-
-  def self.unencoded
-    all(:state => 'unencoded')
-  end
-
-  def self.encoding
-    all(:state => 'encoding')
-  end
-
-  def self.with_errors
-    all(:state => 'error')
-  end
-
-  def self.complete
-    all(:state => 'complete', :order => [:updated_at.desc])
   end
 
 end

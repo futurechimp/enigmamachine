@@ -1,66 +1,8 @@
-# Gems
-require 'rubygems'
-require 'sinatra'
-require 'datamapper'
-require 'ruby-debug'
-require 'eventmachine'
-require 'rack-flash'
-require 'logger'
+puts "rock"
 
-# Models
-#
-require 'enigmamachine/models'
+require File.dirname(__FILE__) + '/init.rb'
 
-
-# Encoder
-#
-require 'enigmamachine/encoders/video'
-
-# Database config
-#
-db = "sqlite3:///#{Dir.pwd}/enigmamachine.sqlite3"
-DataMapper.setup(:default, db)
-Video.auto_migrate! unless Video.storage_exists?
-Encoder.auto_migrate! unless Encoder.storage_exists?
-EncodingTask.auto_migrate! unless EncodingTask.storage_exists?
-DataMapper.auto_upgrade!
-
-# Extensions to Sinatra
-#
-require 'enigmamachine/partials'
-require 'enigmamachine/array_ext'
-require 'enigmamachine/reloader'
-
-# Set the views to the proper path inside the gem
-#
-set :views, File.dirname(__FILE__) + '/enigmamachine/views'
-set :public, File.dirname(__FILE__) + '/enigmamachine/public'
-
-
-# Register helpers
-#
-helpers do
-  include Sinatra::Partials
-  alias_method :h, :escape_html
-end
-
-
-# Set up Rack authentication
-#
-use Rack::Auth::Basic do |username, password|
-  [username, password] == ['admin', 'admin']
-end
-
-# Include flash notices
-#
-use Rack::Session::Cookie
-use Rack::Flash
-
-configure do
-  Log = Logger.new("enigma.log")
-  Log.level  = Logger::INFO
-end
-
+puts "roll"
 
 # Shows the enigma status page.
 #
