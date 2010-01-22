@@ -8,8 +8,9 @@ require 'eventmachine'
 require 'rack-flash'
 require 'logger'
 
-# Models
+# Enigma code
 #
+require File.dirname(__FILE__) + '/enigmamachine'
 require File.dirname(__FILE__) + '/enigmamachine/models/encoder'
 require File.dirname(__FILE__) + '/enigmamachine/models/encoding_task'
 require File.dirname(__FILE__) + '/enigmamachine/models/video'

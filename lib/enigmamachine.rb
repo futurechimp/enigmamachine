@@ -1,8 +1,4 @@
-puts "rock"
-
 require File.dirname(__FILE__) + '/init.rb'
-
-puts "roll"
 
 # Shows the enigma status page.
 #
