@@ -102,7 +102,7 @@ end
 #
 put '/encoding_tasks/:id' do |id|
   @encoding_task = EncodingTask.get(id)
-  if @encoding_task.update_attributes(params[:encoding_task])
+  if @encoding_task.update(params[:encoding_task])
     redirect "/encoders/#{@encoding_task.encoder.id}"
   else
     erb :'encoding_tasks/edit'

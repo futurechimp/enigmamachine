@@ -303,5 +303,78 @@ class TestEnigmamachine < Test::Unit::TestCase
     end
   end
 
+  context "on PUT to /encoding_tasks/:id" do
+    context "without credentials" do
+      setup do
+        put "/encoding_tasks/#{Encoder.first.id}"
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      context "and valid EncodingTask params" do
+        setup do
+          @encoding_task = EncodingTask.make(:with_encoder)
+          @num_tasks = EncodingTask.count
+          put "/encoding_tasks/#{@encoding_task.id}", {:id => @encoding_task.id, :encoding_task => EncodingTask.plan}, basic_auth_creds
+          follow_redirect!
+        end
+
+        should "not create a new encoding task" do
+          assert_equal @num_tasks, EncodingTask.count
+        end
+
+        should "redirect to parent encoder show page" do
+          assert_equal "http://example.org/encoders/#{@encoding_task.encoder.id}", last_request.url
+        end
+      end
+
+      context "and invalid EncodingTask params" do
+        setup do
+          @encoding_task = EncodingTask.make(:with_encoder)
+          @num_tasks = EncodingTask.count
+          put "/encoding_tasks/#{@encoding_task.id}", {
+            :encoding_task => EncodingTask.plan.merge(:name => "")}, basic_auth_creds
+        end
+
+        should "not create a new encoding task" do
+          assert_equal @num_tasks, EncodingTask.count
+        end
+
+        should "redisplay the EncodingTask form" do
+          assert last_response.ok?
+        end
+      end
+    end
+  end
+
+  context "on GET to /videos" do
+    context "without credentials" do
+      setup do
+        get "/videos"
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      setup do
+        get "/videos", {}, basic_auth_creds
+      end
+
+      should "work" do
+        assert last_response.ok?
+      end
+    end
+
+  end
+
 end
 
