@@ -373,7 +373,79 @@ class TestEnigmamachine < Test::Unit::TestCase
         assert last_response.ok?
       end
     end
+  end
 
+  context "on GET to /videos/new" do
+    context "without credentials" do
+      setup do
+        get "/videos/new"
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+  end
+
+  context "with credentials" do
+    setup do
+      get "/videos/new", {}, basic_auth_creds
+    end
+
+    should "work" do
+      assert last_response.ok?
+    end
+  end
+
+  context "on POST to /videos" do
+    context "without credentials" do
+      setup do
+        post "/videos", {:video => Video.plan}
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      context "and valid video params" do
+        setup do
+          @num_videos = Video.count
+          post "/videos", {
+            :video => Video.plan,
+            :encoder_id => Encoder.make.id}, basic_auth_creds
+          follow_redirect!
+        end
+
+        should "create a video" do
+          assert_equal @num_videos + 1, Video.count
+        end
+
+        should "redirect to /videos" do
+          assert_equal "http://example.org/videos", last_request.url
+        end
+      end
+
+      context "and invalid video params" do
+        setup do
+          @num_videos = Video.count
+          post "/videos", {
+            :video => Video.plan.merge(:file => ""),
+            :encoder_id => Encoder.make.id}, basic_auth_creds
+        end
+
+        should "not create a new video" do
+          assert_equal @num_videos, Video.count
+        end
+
+        should "redisplay the video form" do
+          assert last_response.ok?
+        end
+      end
+    end
   end
 
 end
