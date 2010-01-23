@@ -65,6 +65,12 @@ put '/encoders/:id' do |id|
   end
 end
 
+delete '/encoders/:id' do |id|
+  @encoder = Encoder.get(id)
+  @encoder.destroy!
+  redirect '/encoders'
+end
+
 
 # Show a form to make a new encoding task
 #

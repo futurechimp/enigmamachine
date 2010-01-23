@@ -233,6 +233,36 @@ class TestEnigmamachine < Test::Unit::TestCase
     end
   end
 
+  context "on DELETE to /encoders" do
+    context "without credentials" do
+      setup do
+        delete "/encoders/#{Encoder.first.id}", {:id => Encoder.first.id}
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      setup do
+        @encoder = Encoder.make
+        @num_encoders = Encoder.count
+        delete "/encoders/#{@encoder.id}", {:id => @encoder.id}, basic_auth_creds
+        follow_redirect!
+      end
+
+      should "destroy the encoder" do
+        assert_equal @num_encoders - 1, Encoder.count
+      end
+
+      should "redirect to the encoder list page" do
+        assert_equal "http://example.org/encoders", last_request.url
+      end
+    end
+  end
+
   context "on GET to /encoding_tasks/new/:encoder_id" do
     context "without credentials" do
       setup do
