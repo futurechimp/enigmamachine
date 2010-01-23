@@ -23,7 +23,7 @@ get '/encoders/new' do
 end
 
 
-# Displays a list of all available encoders.
+# Displays an encoder.
 #
 get '/encoders/:id' do |id|
   @encoder = Encoder.get(id)
