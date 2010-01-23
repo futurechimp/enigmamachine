@@ -269,18 +269,36 @@ class TestEnigmamachine < Test::Unit::TestCase
     end
 
     context "with credentials" do
-      setup do
-        @num_tasks = EncodingTask.count
-        post "/encoding_tasks/#{Encoder.first.id}", {:encoding_task => EncodingTask.plan}, basic_auth_creds
-        follow_redirect!
+      context "and valid EncodingTask params" do
+        setup do
+          @num_tasks = EncodingTask.count
+          post "/encoding_tasks/#{Encoder.first.id}", {:encoding_task => EncodingTask.plan}, basic_auth_creds
+          follow_redirect!
+        end
+
+        should "create a new encoding task" do
+          assert_equal @num_tasks + 1, EncodingTask.count
+        end
+
+        should "redirect to parent encoder show page" do
+          assert_equal "http://example.org/encoders/#{Encoder.first.id}", last_request.url
+        end
       end
 
-      should "create a new encoding task" do
-        assert_equal @num_tasks + 1, EncodingTask.count
-      end
+      context "and invalid EncodingTask params" do
+        setup do
+          @num_tasks = EncodingTask.count
+          post "/encoding_tasks/#{Encoder.first.id}", {
+            :encoding_task => EncodingTask.plan.merge(:name => "")}, basic_auth_creds
+        end
 
-      should "redirect to parent encoder show page" do
-        assert_equal "http://example.org/encoders/#{Encoder.first.id}", last_request.url
+        should "not create a new encoding task" do
+          assert_equal @num_tasks, EncodingTask.count
+        end
+
+        should "redisplay the EncodingTask form" do
+          assert last_response.ok?
+        end
       end
     end
   end
