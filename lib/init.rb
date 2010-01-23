@@ -18,7 +18,7 @@ require File.dirname(__FILE__) + '/enigmamachine/models/video'
 
 # Encoder
 #
-require 'enigmamachine/encoders/video'
+require File.dirname(__FILE__) + '/enigmamachine/encoders/video'
 
 # Database config
 #
@@ -44,8 +44,8 @@ DataMapper.auto_upgrade!
 
 # Extensions to Sinatra
 #
-require 'ext/partials'
-require 'ext/array_ext'
+require File.dirname(__FILE__) +  '/ext/partials'
+require File.dirname(__FILE__) +  '/ext/array_ext'
 
 # Set the views to the proper path inside the gem
 #
