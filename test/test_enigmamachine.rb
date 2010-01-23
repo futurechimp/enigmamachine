@@ -236,7 +236,8 @@ class TestEnigmamachine < Test::Unit::TestCase
   context "on DELETE to /encoders" do
     context "without credentials" do
       setup do
-        delete "/encoders/#{Encoder.first.id}", {:id => Encoder.first.id}
+        @encoder = Encoder.make
+        delete "/encoders/#{@encoder.id}", {:id => @encoder.id}
       end
 
       should "respond with security error" do
@@ -381,6 +382,34 @@ class TestEnigmamachine < Test::Unit::TestCase
       end
     end
   end
+
+  context "on DELETE to /encoding_tasks/:id" do
+    context "without credentials" do
+      setup do
+        @task = EncodingTask.make
+        delete "/encoding_tasks/#{@task.id}"
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      setup do
+        @task = EncodingTask.make
+        @num_tasks = EncodingTask.count
+        delete "/encoding_tasks/#{@task.id}", {:id => @task.id}, basic_auth_creds
+      end
+
+      should "destroy the task" do
+        assert_equal @num_tasks - 1, EncodingTask.count
+      end
+
+    end
+  end
+
 
   context "on GET to /videos" do
     context "without credentials" do

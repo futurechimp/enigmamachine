@@ -115,6 +115,13 @@ put '/encoding_tasks/:id' do |id|
   end
 end
 
+delete '/encoding_tasks/:id' do |id|
+  @encoding_task = EncodingTask.get(id)
+  @encoder = @encoding_task.encoder
+  @encoding_task.destroy!
+  redirect "/encoders/#{@encoder.id}"
+end
+
 # Displays a list of available videos
 #
 get '/videos' do
