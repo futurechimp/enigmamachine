@@ -7,7 +7,7 @@ class TestEnigmamachine < Test::Unit::TestCase
       get '/'
     end
 
-    should "respond" do
+    should "respond with security error" do
       assert !last_response.ok?
       assert_equal 401, status
     end
@@ -25,6 +25,29 @@ class TestEnigmamachine < Test::Unit::TestCase
     context "when there is one Video" do
       setup do
         Video.make
+        get '/', {}, basic_auth_creds
+      end
+
+      should "work" do
+        assert last_response.ok?
+      end
+    end
+  end
+
+  context "on GET to /encoders" do
+    context "without credentials" do
+      setup do
+        get '/'
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      setup do
         get '/', {}, basic_auth_creds
       end
 
