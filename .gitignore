@@ -19,3 +19,8 @@ rdoc
 pkg
 
 ## PROJECT::SPECIFIC
+*.log
+*.sqlite3
+*.mpg
+*.flv
+
