@@ -6,12 +6,13 @@ module Encoders
     # Adds a periodic timer to the Eventmachine reactor loop and immediately
     # starts looking for unencoded videos.
     #
-    def initialize
+    def start
       EM.add_periodic_timer(5) {
         encode_next_video
       }
       encode_next_video
     end
+
 
     # Gets the next unencoded Video from the database and starts encoding it.
     #
