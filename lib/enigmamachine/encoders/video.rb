@@ -1,5 +1,3 @@
-require 'rest_client'
-
 module Encoders
   class Video
 
