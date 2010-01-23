@@ -1,5 +1,10 @@
 <% task = encoders_encoding_task %>
 <div id="task<%= task.id %>">
-<strong><%= task.name %>:</strong> ffmpeg <%= task.command %> :: <i><%= task.output_file_suffix %></i> suffix :: <a href="/encoding_tasks/<%= task.id%>/edit">edit</a> destroy
+<strong><%= task.name %>:</strong> ffmpeg <%= task.command %> :: <i><%= task.output_file_suffix %></i> suffix :: <a href="/encoding_tasks/<%= task.id%>/edit">edit</a>
+
+<form action="/encoding_tasks/<%= task.id %>" method="POST">
+  <input name="_method" value="DELETE" type="hidden"/>
+  <input type="submit" value="Delete"/>
+</form>
 </div>
 
