@@ -57,8 +57,7 @@ end
 #
 put '/encoders/:id' do |id|
   @encoder = Encoder.get(id)
-  debugger
-  if @encoder.update_attributes(params[:encoder])
+  if @encoder.update(params[:encoder])
     flash[:notice] = "Encoder updated."
     redirect '/encoders'
   else

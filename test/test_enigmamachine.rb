@@ -89,7 +89,102 @@ class TestEnigmamachine < Test::Unit::TestCase
         assert last_response.ok?
       end
     end
+  end
 
+  context "on GET to /encoders/edit" do
+    setup do
+      @encoder = Encoder.make
+    end
+
+    context "without credentials" do
+      setup do
+        get "/encoders/#{@encoder.id}/edit"
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      setup do
+        get "/encoders/#{@encoder.id}/edit", {}, basic_auth_creds
+      end
+
+      should "work" do
+        assert last_response.ok?
+      end
+    end
+  end
+
+  context "on POST to /encoders" do
+    context "without credentials" do
+      setup do
+        post "/encoders", Encoder.plan
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+
+      context "and valid Encoder params" do
+        setup do
+          @num_encoders = Encoder.count
+          post "/encoders", {:encoder => Encoder.plan}, basic_auth_creds
+          follow_redirect!
+        end
+
+        should "create an Encoder object" do
+          assert_equal "http://example.org/encoders/#{Encoder.last.id}", last_request.url
+          assert_equal @num_encoders + 1, Encoder.count
+        end
+      end
+
+      context "and invalid Encoder params" do
+        setup do
+          @num_encoders = Encoder.count
+          post "/encoders", {:encoder => Encoder.plan.merge(:name => "")}, basic_auth_creds
+        end
+
+        should "redisplay the form" do
+          assert_equal "http://example.org/encoders", last_request.url
+        end
+
+        should "not create an Encoder object" do
+          assert_equal @num_encoders, Encoder.count
+        end
+      end
+    end
+  end
+
+  context "on PUT to /encoders/:id" do
+    context "without credentials" do
+      setup do
+        put "/encoders/#{Encoder.first.id}", {:encoder => Encoder.plan}
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      setup do
+        put "/encoders/#{Encoder.first.id}", {:id => Encoder.first.id, :encoder => Encoder.plan}, basic_auth_creds
+        @num_encoders = Encoder.count
+        follow_redirect!
+      end
+
+      should "work" do
+        assert_equal "http://example.org/encoders", last_request.url
+      end
+    end
   end
 end
 
