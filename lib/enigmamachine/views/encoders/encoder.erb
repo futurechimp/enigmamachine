@@ -1,7 +1,10 @@
 <li>
 <%= encoders_encoder.name %> -
 <a href="/encoders/<%= encoders_encoder.id %>">show</a>
-<a href="/encoders/<%= encoders_encoder.id%>/edit">edit</a>
-delete
+<a href="/encoders/<%= encoders_encoder.id %>/edit">edit</a>
+<form action="/encoders/<%= encoders_encoder.id %>" method="POST">
+  <input name="_method" value="DELETE" type="hidden"/>
+  <input type="submit" value="Delete"/>
+</form>
 </li>
 
