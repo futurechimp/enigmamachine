@@ -29,7 +29,7 @@ class Encoder
   #
   def ffmpeg(task, video)
     current_task_index = encoding_tasks.index(task)
-    command_string = "ffmpeg -i #{video.file} #{task.command} #{video.file + task.output_file_suffix}"
+    command_string = "ffmpeg -i #{video.file} #{task.command} #{video.file + task.output_file_suffix} -y"
     encoding_operation = proc {
       video.state = "encoding"
       video.save
