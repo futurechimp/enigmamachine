@@ -14,11 +14,7 @@ require File.dirname(__FILE__) + '/enigmamachine'
 require File.dirname(__FILE__) + '/enigmamachine/models/encoder'
 require File.dirname(__FILE__) + '/enigmamachine/models/encoding_task'
 require File.dirname(__FILE__) + '/enigmamachine/models/video'
-
-
-# Encoder
-#
-require File.dirname(__FILE__) + '/enigmamachine/encoders/video'
+require File.dirname(__FILE__) + '/enigmamachine/encoding_queue'
 
 # Database config
 #

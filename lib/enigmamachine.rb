@@ -173,7 +173,7 @@ Thread.new do
   end
   reset_encoding_videos
   Log.info(":::: Starting encoder ::::")
-  queue = Encoders::Video.new
+  queue = EncodingQueue.new
   queue.start
 end
 
