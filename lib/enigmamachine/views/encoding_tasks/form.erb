@@ -1,12 +1,12 @@
-  <p><strong>Name:</strong>
-  <input name="encoding_task[name]" id="encoding_task_name" value="<%= @encoding_task.name %>" ></input></p> 
-  
-  <p><strong>Output file suffix:</strong>
-  <input name="encoding_task[output_file_suffix]" id="encoding_task_output_file_suffix" value="<%= @encoding_task.output_file_suffix %>" ></input></p>   
-  
-  <p><strong>Encoding command:</strong><br/>
-  <input name="encoding_task[command]" id="encoding_task_command" value="<%= @encoding_task.command %>" size="70"></input></p>    
+  <p><strong>Name:</strong> e.g. <em>encode a 320x240 flv at 25 frames per second</em><br/>
+  <input name="encoding_task[name]" id="encoding_task_name" value="<%= @encoding_task.name %>" ></input></p>
 
-  <input type="submit" value="Save"/> 
+  <p><strong>Output file suffix:</strong> e.g. <em>.flv</em><br/>
+  <input name="encoding_task[output_file_suffix]" id="encoding_task_output_file_suffix" value="<%= @encoding_task.output_file_suffix %>" ></input></p>
+
+  <p><strong>Encoding command:</strong> e.g. <em>-ab 128 -ar 22050 -b 500000 -r 25 -s 320x240<br/>
+  <input name="encoding_task[command]" id="encoding_task_command" value="<%= @encoding_task.command %>" size="70"></input></p>
+
+  <input type="submit" value="Save"/>
   <p><a href="/encoders/<%= @encoding_task.encoder.id %>">cancel</a></p>
 
