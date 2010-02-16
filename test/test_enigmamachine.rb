@@ -287,6 +287,31 @@ class TestEnigmamachine < Test::Unit::TestCase
     end
   end
 
+
+  context "on GET to /encoding_tasks/:id/edit" do
+    context "without credentials" do
+      setup do
+        get "/encoding_tasks/#{Encoder.first.id}/edit"
+      end
+
+      should "respond with security error" do
+        assert !last_response.ok?
+        assert_equal 401, status
+      end
+    end
+
+    context "with credentials" do
+      setup do
+        get "/encoding_tasks/#{Encoder.first.id}/edit", {}, basic_auth_creds
+      end
+
+      should "work" do
+        assert last_response.ok?
+      end
+    end
+  end
+
+
   context "on POST to /encoding_tasks/:encoder_id" do
     context "without credentials" do
       setup do
