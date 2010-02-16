@@ -11,6 +11,9 @@ begin
     gem.homepage = "http://github.com/futurechimp/enigmamachine"
     gem.authors = ["dave"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.add_dependency "dm-core", "=0.10.2"
+    gem.add_dependency "eventmachine", "=0.12.10"
+
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -51,3 +54,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
