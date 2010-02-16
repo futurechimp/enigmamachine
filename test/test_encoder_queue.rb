@@ -9,7 +9,7 @@ class TestEncoderQueue < Test::Unit::TestCase
       @task = EncodingTask.make(:with_encoder)
       @video.encoder = @task.encoder
       @video.save
-      @queue = Encoders::Video.new
+      @queue = EncodingQueue.new
       @queue.encode_next_video
       sleep 1
     end
