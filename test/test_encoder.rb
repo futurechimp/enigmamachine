@@ -42,7 +42,7 @@ class TestEncoder <  Test::Unit::TestCase
           assert_equal "encoding", video.state
         end
 
-        should "mark the video as complete" do
+        should_eventually "mark the video as complete" do
           sleep 5
           video = Video.get(@id)
           assert_equal "complete", video.state
@@ -66,7 +66,7 @@ class TestEncoder <  Test::Unit::TestCase
           assert_equal "encoding", video.state
         end
 
-        should "mark the video as complete" do
+        should_eventually "mark the video as complete" do
           sleep 1
           video = Video.get(@id)
           assert_equal "complete", video.state
