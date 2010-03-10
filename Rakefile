@@ -13,6 +13,13 @@ begin
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_dependency "dm-core", "=0.10.2"
     gem.add_dependency "eventmachine", "=0.12.10"
+    gem.add_dependency "rack-flash"
+    gem.add_dependency "ruby-debug"
+    gem.add_dependency "sinatra"
+    gem.add_dependency "datamapper"
+    gem.add_dependency "data_objects"
+    gem.add_dependency "do_sqlite3"
+    gem.add_dependency "thin"
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
