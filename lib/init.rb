@@ -71,5 +71,6 @@ use Rack::Flash
 configure do
   Log = Logger.new("enigma.log")
   Log.level  = Logger::INFO
+  Log.info("Logging started...")
 end
 
