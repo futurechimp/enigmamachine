@@ -13,7 +13,7 @@ begin
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_dependency "dm-core", "=0.10.2"
     gem.add_dependency "eventmachine", "=0.12.10"
-
+    gem.add_dependency "dm-sqlite-adapter", "=1.0.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
