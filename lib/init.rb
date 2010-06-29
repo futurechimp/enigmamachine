@@ -8,6 +8,7 @@ require 'eventmachine'
 require 'rack-flash'
 require 'dm-validations'
 require 'dm-migrations'
+require 'open3'
 
 # Extensions to Sinatra
 #

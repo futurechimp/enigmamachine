@@ -36,7 +36,7 @@ class Encoder
       video.state = "encoding"
       video.save
       puts "Executing: #{task.name} on video #{video.id}"
-      `nice -n 19 #{command_string}`
+      Open3.popen3 "nice -n 19 #{command_string}"
     }
     completion_callback = proc {|result|
       if task == encoding_tasks.last
