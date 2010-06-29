@@ -2,7 +2,7 @@
 #
 require 'rubygems'
 require 'sinatra'
-require 'datamapper'
+require 'data_mapper'
 require 'ruby-debug'
 require 'eventmachine'
 require 'rack-flash'
