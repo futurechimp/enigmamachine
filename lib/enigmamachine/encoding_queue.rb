@@ -1,9 +1,12 @@
 class EncodingQueue
 
+  cattr_accessor :currently_encoding
+
   # Adds a periodic timer to the Eventmachine reactor loop and immediately
   # starts looking for unencoded videos.
   #
-  def start
+  def initialize
+    puts "Initializing EncodingQueue..."
     EM.add_periodic_timer(5) {
       encode_next_video
     }
@@ -16,11 +19,11 @@ class EncodingQueue
   def encode_next_video
     if Video.unencoded.count > 0 && ::Video.encoding.count == 0
       video = Video.unencoded.first
-      Log.info("Starting to encode video: #{video.id}")
+      puts "Starting to encode video: #{video.id}"
       begin
         video.encoder.encode(video)
       rescue Exception => ex
-        Log.error("Video #{video.id} failed to encode due to error: #{ex}")
+        puts "Video #{video.id} failed to encode due to error: #{ex}"
       end
     end
   end

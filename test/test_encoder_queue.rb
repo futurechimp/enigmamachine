@@ -9,9 +9,9 @@ class TestEncoderQueue < Test::Unit::TestCase
       @task = EncodingTask.make(:with_encoder)
       @video.encoder = @task.encoder
       @video.save
+      sleep 2
       @queue = EncodingQueue.new
       @queue.encode_next_video
-      sleep 1
     end
 
     should "exist" do

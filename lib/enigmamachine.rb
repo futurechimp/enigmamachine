@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/init.rb'
+require File.dirname(__FILE__) + '/init'
 
 # Shows the enigma status page.
 #
@@ -104,7 +104,7 @@ get '/encoding_tasks/:id/edit' do |id|
 end
 
 
-# Updates an encoding task
+# Updates an encoding task.
 #
 put '/encoding_tasks/:id' do |id|
   @encoding_task = EncodingTask.get(id)
@@ -115,6 +115,8 @@ put '/encoding_tasks/:id' do |id|
   end
 end
 
+# Deletes an encoding task.
+#
 delete '/encoding_tasks/:id' do |id|
   @encoding_task = EncodingTask.get(id)
   @encoder = @encoding_task.encoder
@@ -122,7 +124,7 @@ delete '/encoding_tasks/:id' do |id|
   redirect "/encoders/#{id}"
 end
 
-# Displays a list of available videos
+# Displays a list of available videos.
 #
 get '/videos' do
   @completed_videos = Video.complete
@@ -172,8 +174,8 @@ Thread.new do
     sleep 1
   end
   reset_encoding_videos
-  Log.info(":::: Starting encoder ::::")
+#  Log.info(":::: Starting encoder ::::")
   queue = EncodingQueue.new
-  queue.start
+  #queue.start
 end
 
