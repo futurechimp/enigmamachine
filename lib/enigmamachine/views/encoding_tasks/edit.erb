@@ -13,7 +13,9 @@
   </div>
 <% end %>
 
-<form id="task-<%= @encoding_task.id%>-edit" action="/encoding_tasks/<%= @encoding_task.id %>" method="POST">
+<form id="task-<%= @encoding_task.id%>-edit"
+      action="/encoding_tasks/<%= @encoding_task.id %>"
+      method="POST">
   <input name="_method" value="PUT" type="hidden"></input>
   <%= partial(:'encoding_tasks/form') %>
 </form>
