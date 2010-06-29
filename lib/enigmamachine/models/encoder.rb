@@ -35,14 +35,14 @@ class Encoder
     encoding_operation = proc {
       video.state = "encoding"
       video.save
-      puts "Executing: #{task.name} on video #{video.id}"
+      Log.info "Executing: #{task.name} on video #{video.id}"
       Open3.popen3 "nice -n 19 #{command_string}"
     }
     completion_callback = proc {|result|
       if task == encoding_tasks.last
         video.state = "complete"
         video.save
-        puts "Video #{video.id} finished"
+        Log.info "Video #{video.id} finished"
       else
         next_task_index = current_task_index + 1
         next_task = encoding_tasks[next_task_index]
