@@ -35,14 +35,14 @@ class Encoder
     encoding_operation = proc {
       video.state = "encoding"
       video.save
-      Log.info("Executing: #{task.name} on video #{video.id}")
+      puts "Executing: #{task.name} on video #{video.id}"
       `nice -n 19 #{command_string}`
     }
     completion_callback = proc {|result|
       if task == encoding_tasks.last
         video.state = "complete"
         video.save
-        Log.info("Video #{video.id} finished")
+        puts "Video #{video.id} finished"
       else
         next_task_index = current_task_index + 1
         next_task = encoding_tasks[next_task_index]
