@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/init.rb'
+require File.dirname(__FILE__) + '/init'
 
 # Shows the enigma status page.
 #
@@ -172,7 +172,7 @@ Thread.new do
     sleep 1
   end
   reset_encoding_videos
-  Log.info(":::: Starting encoder ::::")
+#  Log.info(":::: Starting encoder ::::")
   queue = EncodingQueue.new
   queue.start
 end

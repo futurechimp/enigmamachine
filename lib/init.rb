@@ -6,7 +6,13 @@ require 'datamapper'
 require 'ruby-debug'
 require 'eventmachine'
 require 'rack-flash'
-require 'logger'
+require 'dm-validations'
+require 'dm-migrations'
+
+# Extensions to Sinatra
+#
+require File.dirname(__FILE__) +  '/ext/partials'
+require File.dirname(__FILE__) +  '/ext/array_ext'
 
 # Enigma code
 #
@@ -33,21 +39,20 @@ configure :test do
   DataMapper.setup(:default, db)
 end
 
-Video.auto_migrate! unless Video.storage_exists?
-Encoder.auto_migrate! unless Encoder.storage_exists?
-EncodingTask.auto_migrate! unless EncodingTask.storage_exists?
-DataMapper.auto_upgrade!
+configure :production, :test, :development do
+  Video.auto_migrate! unless Video.storage_exists?
+  Encoder.auto_migrate! unless Encoder.storage_exists?
+  EncodingTask.auto_migrate! unless EncodingTask.storage_exists?
+end
 
-# Extensions to Sinatra
-#
-require File.dirname(__FILE__) +  '/ext/partials'
-require File.dirname(__FILE__) +  '/ext/array_ext'
+configure :production, :development do
+  DataMapper.auto_upgrade!
+end
 
 # Set the views to the proper path inside the gem
 #
 set :views, File.dirname(__FILE__) + '/enigmamachine/views'
 set :public, File.dirname(__FILE__) + '/enigmamachine/public'
-
 
 # Register helpers
 #
@@ -55,7 +60,6 @@ helpers do
   include Sinatra::Partials
   alias_method :h, :escape_html
 end
-
 
 # Set up Rack authentication
 #
@@ -67,9 +71,4 @@ end
 #
 use Rack::Session::Cookie
 use Rack::Flash
-
-configure do
-  Log = Logger.new("enigma.log")
-  Log.level  = Logger::INFO
-end
 
