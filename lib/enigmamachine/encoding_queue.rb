@@ -21,9 +21,7 @@ class EncodingQueue
       begin
         video.encoder.encode(video)
       rescue Exception => ex
-        File.open('/home/dave/test.txt', 'w') do |f|
-          f.puts ex
-        end
+        # don't do anything just yet, until we set up logging properly.
       end
     end
   end
