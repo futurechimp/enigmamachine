@@ -1,5 +1,7 @@
 = enigmamachine
 
+== Don't use this gem yet.  The Enigmamachine wants to run on 0.0.0.0 rather than 127.0.0.1 (loopback) so you are opening a huge security hole on your server if you run this gem.  Don't use it until this note goes away (real soon now). You have been warned.
+
 Enigmamachine is a video processor which queues and encodes videos according
 to target profiles that you define.  Videos must be on a locally mounted
 filesystem.  The processor takes the path to the video, and executes
@@ -123,10 +125,10 @@ You can install it as a gem by doing:
 
 If this command doesn't make any sense to you, it's because you don't know that
 "gems" are ruby code packages, somewhat like apt-get except for ruby code only.
-You can install rubygems and a C compiler on righteous operating systems by
-typing:
+You can install rubygems, necessary sqlite headers, and a C compiler on
+righteous operating systems by typing:
 
- apt-get install rubygems ruby1.8-dev build-essential # as root
+ apt-get install rubygems ruby1.8-dev build-essential libsqlite3-dev # as root
 
 Then _gem install enigmamachine_ should theoretically work.  You'll also need a copy of
 ffmpeg installed and available in your path. On Mac OS X, rubygems should
