@@ -52,10 +52,10 @@ class EnigmaMachine < Sinatra::Base
   use Rack::Session::Cookie
   use Rack::Flash
 
+  # Starts the enigma encoding thread. The thread will be reabsorbed into the
+  # main Sinatra/thin thread once the periodic timer is added.
+  #
   configure do
-    Log = Logger.new("enigma.log")
-    Log.level  = Logger::INFO
-    Log.info("Logging started...")
     Thread.new do
       until EM.reactor_running?
         sleep 1
@@ -235,16 +235,4 @@ class EnigmaMachine < Sinatra::Base
   end
 
 end
-
-
-# Starts the enigma encoding thread. The thread will be reabsorbed into the
-# main Sinatra/thin thread once the periodic timer is added.
-#
-#Thread.new do
-#  until EM.reactor_running?
-#    sleep 1
-#  end
-#  reset_encoding_videos
-#  queue = EncodingQueue.new
-#end
 
