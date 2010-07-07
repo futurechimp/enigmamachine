@@ -31,18 +31,20 @@ class Encoder
   #
   def ffmpeg(task, video)
     current_task_index = encoding_tasks.index(task)
-    command_string = "ffmpeg -i #{video.file} #{task.command} #{video.file + task.output_file_suffix} -y"
+    command_string = "ffmpeg -y -i #{video.file} #{task.command} #{video.file + task.output_file_suffix}"
     encoding_operation = proc {
       video.state = "encoding"
       video.save
-      Log.info "Executing: #{task.name} on video #{video.id}"
-      Open3.popen3 "nice -n 19 #{command_string}"
+      Open3.popen3 "nice -n 19 #{command_string}" do |stdin, stdout, stderr|
+        while stderr.gets()
+          puts stderr.gets
+        end
+      end
     }
     completion_callback = proc {|result|
       if task == encoding_tasks.last
         video.state = "complete"
         video.save
-        Log.info "Video #{video.id} finished"
       else
         next_task_index = current_task_index + 1
         next_task = encoding_tasks[next_task_index]

@@ -6,7 +6,6 @@ class EncodingQueue
   # starts looking for unencoded videos.
   #
   def initialize
-    Log.info "Initializing EncodingQueue..."
     EM.add_periodic_timer(5) {
       encode_next_video
     }
@@ -19,11 +18,12 @@ class EncodingQueue
   def encode_next_video
     if Video.unencoded.count > 0 && ::Video.encoding.count == 0
       video = Video.unencoded.first
-      Log.info "Starting to encode video: #{video.id}"
       begin
         video.encoder.encode(video)
       rescue Exception => ex
-        Log.info "Video #{video.id} failed to encode due to error: #{ex}"
+        File.open('/home/dave/test.txt', 'w') do |f|
+          f.puts ex
+        end
       end
     end
   end
