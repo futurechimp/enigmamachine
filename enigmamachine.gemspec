@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/enigmamachine",
+     "enigmamachine.gemspec",
      "lib/enigmamachine.rb",
      "lib/enigmamachine.sqlite3",
      "lib/enigmamachine/config.ru",
