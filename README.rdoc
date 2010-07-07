@@ -35,9 +35,9 @@ everything else is handled for you.
 
 Once you've installed the gem (see below), you can do something like:
 
-mkdir enigma
-cd enigma
-enigmamachine start  # -d to daemonize
+ mkdir enigma
+ cd enigma
+ enigmamachine start  # -d to daemonize
 
 Then check it out in your browser, at http://localhost:2002.
 
