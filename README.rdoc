@@ -76,12 +76,16 @@ You can install it as a gem by doing:
 
 If this command doesn't make any sense to you, it's because you don't know that
 "gems" are ruby code packages, somewhat like apt-get except for ruby code only.
-You can install rubygems on righteous operating systems by typing
+You can install rubygems and a C compiler on righteous operating systems by
+typing:
 
- apt-get install rubygems # as root
+ apt-get install rubygems build-essential # as root
 
 Then "gem install " should theoretically work.  You'll also need a copy of
-ffmpeg installed and available in your path.
+ffmpeg installed and available in your path. On Mac OS X, rubygems should
+already be installed, although you'll need to have a C compiler available
+(make sure you install the developer tools that came with your operating
+system).
 
 == Status
 
