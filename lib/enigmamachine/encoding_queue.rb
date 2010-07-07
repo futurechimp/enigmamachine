@@ -9,7 +9,6 @@ class EncodingQueue
     EM.add_periodic_timer(5) {
       encode_next_video
     }
-    encode_next_video
   end
 
 
