@@ -56,6 +56,7 @@ class EnigmaMachine < Sinatra::Base
   # main Sinatra/thin thread once the periodic timer is added.
   #
   configure do
+    Video.reset_encoding_videos
     Thread.new do
       until EM.reactor_running?
         sleep 1
@@ -219,18 +220,6 @@ class EnigmaMachine < Sinatra::Base
     else
       @encoders = Encoder.all
       erb :'videos/new'
-    end
-  end
-
-
-  # If any videos are marked as "encoding" when the application starts,
-  # presumably due to an encoding interruption in the last session, they
-  # should be reset.
-  #
-  def reset_encoding_videos
-    Video.encoding.each do |video|
-      video.state = "unencoded"
-      video.save!
     end
   end
 

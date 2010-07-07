@@ -33,5 +33,19 @@ class Video
     all(:state => 'complete', :order => [:updated_at.desc])
   end
 
+  # Resets all videos currently marked as "encoding" to state "unencoded"
+  # which is the initial state.
+  #
+  # If any videos are marked as "encoding" when the application starts,
+  # presumably due to an encoding interruption in the last session, they
+  # should be reset.
+  #
+  def self.reset_encoding_videos
+    Video.encoding.each do |video|
+      video.state = "unencoded"
+      video.save!
+    end
+  end
+
 end
 
