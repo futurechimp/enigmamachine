@@ -1,25 +1,20 @@
 require 'rubygems'
-require 'sinatra'
+require 'sinatra/base'
 require 'rack/test'
 require 'base64'
 require 'machinist/data_mapper'
 require 'faker'
 require 'sham'
-set :environment, :test
-set :run, false
-set :raise_errors, true
-set :logging, false
-require File.dirname(__FILE__) + '/../lib/init'
 require File.dirname(__FILE__) + '/../lib/enigmamachine'
 require File.expand_path(File.dirname(__FILE__) + "/support/blueprints")
 
 
+ENV['RACK_ENV'] = 'test'
 
 module TestHelper
 
   def app
-    # change to your app class if using the 'classy' style
-    Sinatra::Application.new
+    EnigmaMachine.new
   end
 
   def body
