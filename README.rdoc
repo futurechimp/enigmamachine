@@ -3,19 +3,94 @@
 Enigmamachine is a video processor which queues and encodes videos according
 to target profiles that you define.  Videos must be on a locally mounted
 filesystem.  The processor takes the path to the video, and executes
-multiple ffmpeg commands on the video.  There is a handy web interface for
+one or more ffmpeg commands on the video.  There is a handy web interface for
 defining encoding tasks, and a restful web service which takes encoding commands.
 
 Enigmamachine is written using Sinatra, Thin, and Eventmachine.
 
-== Current Status
+== Why would you want one?
 
-The basic Sinatra application and the encoding queue work, but the app needs to
-be packaged up as a gem and all the niceties of running the server need to be
-made more convenient.
+If you're not running a server, you probably don't need enigmamachine, because
+there are already lots of great client-side batch processors for all kinds of
+different operating systems. However, if you are running a web application,
+and you want to process uploaded video, enigmamachine offers you a convenient
+fire-and-forget video encoder.
 
-The biggest problem is that it was done on a whim (i.e. without test-first
-development) since it was just a sketch at first - this needs to be fixed.
+The main problem with encoding video on a server is that it takes a really,
+really long time - you don't want to do it within the scope of a single HTTP
+request, because you want the user's browser to return to their control as
+soon as the upload is finished.  If the video took ten minutes to upload,
+you don't want to keep their browser (and your webapp) busy for a
+further ten minutes while the encoding happens.
+
+The right way to deal with the uploaded video is to fire up a new thread which
+can take over responsibility for encoding the video, while your web app goes
+on its merry way.  Unfortunately, this is difficult in some languages (PHP, for
+example, doesn't have lightweight threading support), and even in languages
+with good threading support it still sort of sucks. With Enigmamachine, all you
+need to do to trigger encoding of a video is shoot off an HTTP request, and
+everything else is handled for you.
+
+== Using it
+
+Once you've installed the gem (see below), you can do something like:
+
+mkdir enigma
+cd enigma
+enigmamachine start  # -d to daemonize
+
+Then check it out in your browser, at http://localhost:2002.
+
+Your application receives a video, and you do an HTTP call like:
+
+ POST http://localhost:2002/videos
+
+with the params:
+
+ params["video"] # the full path to a file on your local filesystem
+ params["encoder_id"] # the id of an encoder defined in your database
+
+The enigmamachine will run all encoding tasks on the video.  If a new video is
+uploaded while the first one is still encoding, it will be placed in a queue.
+Videos are encoded sequentially as they arrive.
+
+== Encoders and Encoding Tasks
+
+
+TODO
+
+
+== Installation
+
+Enigmamachine is written in Ruby and uses the Sinatra web framework, the
+Datamapper ORM library, and the Eventmachine event-processing library.  If
+you're not a Ruby person, you don't need to care about any of this.
+Enigmamachine can be triggered by any language that can send a POST request -
+so all you PHPistas, python-lovers, droopy-moustachists, or blue-suited
+java types can all use it just as easy as us fashionable-haircut-language
+people.
+
+You can install it as a gem by doing:
+
+ gem install enigmamachine
+
+If this command doesn't make any sense to you, it's because you don't know that
+"gems" are ruby code packages, somewhat like apt-get except for ruby code only.
+You can install rubygems on righteous operating systems by typing
+
+ apt-get install rubygems # as root
+
+Then "gem install " should theoretically work.  You'll also need a copy of
+ffmpeg installed and available in your path.
+
+== Status
+
+This thing is still pre-release.
+
+I'm just working on getting the gem dependencies correct, so you may need to
+manually install a few things to get it to work.  You'll also need a working
+copy of ffmpeg available on your path.
+
 
 == Note on Patches/Pull Requests
 
