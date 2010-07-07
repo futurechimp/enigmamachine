@@ -156,6 +156,8 @@ class EnigmaMachine < Sinatra::Base
     end
   end
 
+  # Deletes an encoder
+  #
   delete '/encoders/:id' do |id|
     @encoder = Encoder.get(id)
     @encoder.destroy!
