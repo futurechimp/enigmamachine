@@ -24,5 +24,4 @@ release
 *.sqlite3
 *.mpg
 *.flv
-*.gemspec
 
