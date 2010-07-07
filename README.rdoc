@@ -56,8 +56,44 @@ Videos are encoded sequentially as they arrive.
 
 == Encoders and Encoding Tasks
 
+When you POST the location of a video to your enigmamachine, you need to tell
+your EM what you want to do to the video.  For example, you might want to take
+an uploaded video and encode it as a 320x240 FLV video, with a 320x240 JPEG
+thumbnail, and a 160x120 miniature thumbnail.
 
-TODO
+To do this, you'd fire up your enigmamachine by typing
+
+ enigmamachine start
+
+and go to http://localhost:2002/encoders.  Clicking the "new encoder" link will
+allow you to define a new encoder.  Let's call it "Flash video with a couple
+thumbnails", and save it.
+
+So, now there's an encoder, but it won't do anything.  Let's add some tasks,
+by clicking on the "new task" link.
+
+Give the first task a name, like _Encode a 320x240 flv at 25 frames per second_.
+
+The output file suffix in this case will be *.flv*.
+
+The encoding command you'll want to use would be
+_-ab 128 -ar 22050 -b 500000 -r 25 -s 320x240_.  This cryptic command string
+tells ffmpeg to encode a Flash video at 320x240 pixels, with an audio bitrate
+of 128kbps, an audio sample rate of 22.050khz, and a frame rate of 25fps. You
+can find out what all the ffmpeg command line switches do by RTFMing at
+http://www.ffmpeg.org/ffmpeg-doc.html
+
+You would go on to define a couple more encoding tasks for your encoder.
+Grabbing a screen frame in ffmpeg can be done with the following command-line
+switches, which you can put into a task called, let's say,
+_Grab a 320x240 JPEG thumbnail_:
+
+ -ss 00:00:05 -t 00:00:01 -vcodec mjpeg -vframes 1 -an -f rawvideo -s 320x240
+
+Rinse and repeat for the 160x120 thumbnail.
+
+== Security
+
 
 
 == Installation
