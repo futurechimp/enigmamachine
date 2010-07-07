@@ -94,7 +94,7 @@ class EnigmaMachine < Sinatra::Base
   # Shows the enigma status page.
   #
   get '/' do
-    @videos = Video.all(:limit => 50, :order => [:created_at.asc])
+    @videos = Video.all(:limit => 50, :order => [:created_at.desc])
     erb :index
   end
 
