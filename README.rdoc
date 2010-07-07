@@ -117,7 +117,7 @@ typing:
 
  apt-get install rubygems build-essential # as root
 
-Then "gem install " should theoretically work.  You'll also need a copy of
+Then _gem install enigmamachine_ should theoretically work.  You'll also need a copy of
 ffmpeg installed and available in your path. On Mac OS X, rubygems should
 already be installed, although you'll need to have a C compiler available
 (make sure you install the developer tools that came with your operating
