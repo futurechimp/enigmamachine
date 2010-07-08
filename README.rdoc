@@ -1,7 +1,5 @@
 = enigmamachine
 
-== Don't use this gem yet.  The Enigmamachine wants to run on 0.0.0.0 rather than 127.0.0.1 (loopback) so you are opening a huge security hole on your server if you run this gem.  Don't use it until this note goes away (real soon now). You have been warned.
-
 Enigmamachine is a video processor which queues and encodes videos according
 to target profiles that you define.  Videos must be on a locally mounted
 filesystem.  The processor takes the path to the video, and executes
@@ -96,20 +94,17 @@ Rinse and repeat for the 160x120 thumbnail.
 
 == Security
 
-Enigmamachine should be set to bind by default to 127.0.0.1 (your system's loopback)
-interface.  However, the Thin webserver in the rackup file is currently making
-itself available at IP 0.0.0.0, meaning it'll be available on all network
-interfaces (unless you're running a firewall).
+Enigmamachine is set to bind by default to 127.0.0.1 (your system's loopback)
+interface rather than on all network interfaces.
 
 Making an enigmamachine available on an untrusted network (like
 the Internet) would be a suicidal move on your part, since the code used to
-talk to ffmpeg is a simple exec call and you'll be inviting everyone to
-execute commands on your server.
+talk to ffmpeg is a simple exec call and you'll be inviting everyone in the world
+to execute commands on your server. Have fun with that.
 
 If you don't know what any of this means, don't run it.  I'm not responsible if
 your enigmamachine screws up your system, allows people to exploit you, or
-eats your mother. I'm working on the security and will have updates ready soon.
-
+eats your mother.
 
 == Installation
 
