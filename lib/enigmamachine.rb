@@ -60,6 +60,9 @@ class EnigmaMachine < Sinatra::Base
   set :views, File.dirname(__FILE__) + '/enigmamachine/views'
   set :public, File.dirname(__FILE__) + '/enigmamachine/public'
 
+  # Let's bind this thing to localhost only, it'd be suicidal to put it on the
+  # internet by binding it to all available interfaces.
+  #
   set :bind, 'localhost'
 
   # Register helpers
@@ -71,9 +74,13 @@ class EnigmaMachine < Sinatra::Base
 
   # Set up Rack authentication
   #
-  use Rack::Auth::Basic do |username, password|
-    [username, password] == ['admin', 'admin']
-  end
+  # I'm going to disable this for now, although later this might be a good way
+  # of providing security for shared hosts. TODO: figure out how to secure the
+  # app for use on shared hosts.
+  #
+#  use Rack::Auth::Basic do |username, password|
+#    [username, password] == ['admin', 'admin']
+#  end
 
   # Include flash notices
   #
