@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{enigmamachine}
-  s.version = "0.1.4"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["dave"]
-  s.date = %q{2010-07-07}
+  s.date = %q{2010-07-08}
   s.default_executable = %q{enigmamachine}
   s.description = %q{A RESTful video encoder which you can use as either a front-end to ffmpeg or headless on a server.}
   s.email = %q{dave@caprica}
