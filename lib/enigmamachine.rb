@@ -60,6 +60,8 @@ class EnigmaMachine < Sinatra::Base
   set :views, File.dirname(__FILE__) + '/enigmamachine/views'
   set :public, File.dirname(__FILE__) + '/enigmamachine/public'
 
+  set :bind, 'localhost'
+
   # Register helpers
   #
   helpers do
