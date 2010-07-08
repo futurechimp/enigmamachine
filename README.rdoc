@@ -127,6 +127,10 @@ righteous operating systems by typing:
 
  apt-get install rubygems ruby1.8-dev libopenssl-ruby build-essential libsqlite3-dev # as root
 
+You'll need to add the following line to your ~/.bashrc file, as well:
+
+ export PATH=/var/lib/gems/1.8/bin:$PATH
+
 Then _gem install enigmamachine_ should theoretically work.  You'll also need a copy of
 ffmpeg installed and available in your path. On Mac OS X, rubygems should
 already be installed, although you'll need to have a C compiler available
