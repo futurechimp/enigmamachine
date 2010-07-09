@@ -54,6 +54,48 @@ The enigmamachine will run all encoding tasks on the video.  If a new video is
 uploaded while the first one is still encoding, it will be placed in a queue.
 Videos are encoded sequentially as they arrive.
 
+All requests, whether they come from your browser or from your code, are
+protected by HTTP basic auth.  By default, the username is
+<i>admin</i> and the password is <i>admin</i>.
+
+Programmatic requests in Ruby might look something like this:
+
+    require 'rubygems'
+    require 'httparty'
+    require 'base64'
+
+    class EnigmaClient
+
+      include HTTParty
+      base_uri 'localhost:2002'
+
+      def initialize (u, p)
+        default_params = basic_auth_creds(u, p)
+      end
+
+      def post(path_to_video, encoder_id)
+        options = {:body => {:video => {:file => path_to_video}, :encoder_id => encoder_id}}
+        self.class.post('/videos', options)
+      end
+
+      private
+
+      def basic_auth_creds(username, password)
+        {'HTTP_AUTHORIZATION'=> encode_credentials(username, password)}
+      end
+
+      def encode_credentials(username, password)
+        "Basic " + Base64.encode64("#{username}:#{password}")
+      end
+
+    end
+
+
+ # Let's use it!
+ #
+ EnigmaClient.new("admin", "admin").post("/path/to/your/uploaded/video.mp4", 1)
+
+
 == Encoders and Encoding Tasks
 
 When you POST the location of a video to your enigmamachine, you need to tell
@@ -92,10 +134,11 @@ _Grab a 320x240 JPEG thumbnail_:
 
 Rinse and repeat for the 160x120 thumbnail.
 
-== Security
+== Security considerations
 
 Enigmamachine is set to bind by default to 127.0.0.1 (your system's loopback)
-interface rather than on all network interfaces.
+interface rather than on all network interfaces, so it won't be accessible from
+other machines.
 
 Making an enigmamachine available on an untrusted network (like
 the Internet) would be a suicidal move on your part, since the code used to
@@ -106,7 +149,8 @@ permissions.
 When the enigmamachine starts for the first time in a given directory, it will
 spit out a config.yml file containing a username and password.  All requests
 will need to submit this auth information.  This should make enigmamachine
-reasonably safe to use on shared hosts.
+reasonably safe to use on shared hosts, just make sure nobody can read the
+config file except the user executing the enigmamachine process.
 
 If you don't know what any of this means, don't run it.  I'm not responsible if
 your enigmamachine screws up your system, allows people to exploit you, or
