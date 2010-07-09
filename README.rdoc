@@ -70,25 +70,24 @@ Programmatic requests in Ruby might look something like this:
       base_uri 'localhost:2002'
 
       def initialize (u, p)
-        default_params = basic_auth_creds(u, p)
+        @auth = encode_credentials(u, p)
       end
 
       def post(path_to_video, encoder_id)
-        options = {:body => {:video => {:file => path_to_video}, :encoder_id => encoder_id}}
-        self.class.post('/videos', options)
+        self.class.post('/videos', {
+          :body => {:video => {:file => path_to_video}, :encoder_id => encoder_id},
+          'HTTP_AUTHORIZATION' => @auth
+        })
       end
 
       private
-
-      def basic_auth_creds(username, password)
-        {'HTTP_AUTHORIZATION'=> encode_credentials(username, password)}
-      end
 
       def encode_credentials(username, password)
         "Basic " + Base64.encode64("#{username}:#{password}")
       end
 
     end
+
 
 
  # Let's use it!
