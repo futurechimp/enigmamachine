@@ -43,6 +43,8 @@ class EnigmaMachine < Sinatra::Base
   configure :test do
     db = "sqlite3::memory:"
     DataMapper.setup(:default, db)
+    @@username = 'admin'
+    @@password = 'admin'
   end
 
   configure :production, :test, :development do
@@ -53,6 +55,12 @@ class EnigmaMachine < Sinatra::Base
 
   configure :production, :development do
     DataMapper.auto_upgrade!
+    unless File.exist? File.join(Dir.getwd, 'config.yml')
+      FileUtils.cp(File.dirname(__FILE__) +  '/generators/config.yml', Dir.getwd)
+    end
+    raw_config = File.read(Dir.getwd + "/config.yml")
+    @@username = YAML.load(raw_config)['username']
+    @@password = YAML.load(raw_config)['password']
   end
 
   # Set the views to the proper path inside the gem
@@ -82,12 +90,7 @@ class EnigmaMachine < Sinatra::Base
   # main Sinatra/thin thread once the periodic timer is added.
   #
   configure do
-    unless File.exist? File.join(Dir.getwd, 'config.yml')
-      FileUtils.cp(File.dirname(__FILE__) +  '/generators/config.yml', Dir.getwd)
-    end
-    raw_config = File.read(Dir.getwd + "/config.yml")
-    @@username = YAML.load(raw_config)['username']
-    @@password = YAML.load(raw_config)['password']
+
     Video.reset_encoding_videos
     Thread.new do
       until EM.reactor_running?
