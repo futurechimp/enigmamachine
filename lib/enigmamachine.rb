@@ -90,7 +90,6 @@ class EnigmaMachine < Sinatra::Base
   # main Sinatra/thin thread once the periodic timer is added.
   #
   configure do
-
     Video.reset_encoding_videos
     Thread.new do
       until EM.reactor_running?
