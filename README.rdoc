@@ -99,8 +99,14 @@ interface rather than on all network interfaces.
 
 Making an enigmamachine available on an untrusted network (like
 the Internet) would be a suicidal move on your part, since the code used to
-talk to ffmpeg is a simple exec call and you'll be inviting everyone in the world
-to execute commands on your server. Have fun with that.
+talk to ffmpeg is a simple backtick exec call and you'll be inviting everyone in
+the world to execute commands on your server, with your effective user
+permissions.
+
+When the enigmamachine starts for the first time in a given directory, it will
+spit out a config.yml file containing a username and password.  All requests
+will need to submit this auth information.  This should make enigmamachine
+reasonably safe to use on shared hosts.
 
 If you don't know what any of this means, don't run it.  I'm not responsible if
 your enigmamachine screws up your system, allows people to exploit you, or
