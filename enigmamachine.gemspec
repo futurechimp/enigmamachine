@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["dave"]
-  s.date = %q{2010-07-08}
+  s.date = %q{2010-07-09}
   s.default_executable = %q{enigmamachine}
   s.description = %q{A RESTful video encoder which you can use as either a front-end to ffmpeg or headless on a server.}
   s.email = %q{dave@caprica}
@@ -64,6 +64,7 @@ Gem::Specification.new do |s|
      "lib/enigmamachine/views/videos/video.erb",
      "lib/ext/array_ext.rb",
      "lib/ext/partials.rb",
+     "lib/generators/config.yml",
      "test/helper.rb",
      "test/support/afile.mpg",
      "test/support/blueprints.rb",
