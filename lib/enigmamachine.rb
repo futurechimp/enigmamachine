@@ -72,15 +72,6 @@ class EnigmaMachine < Sinatra::Base
     alias_method :h, :escape_html
   end
 
-  # Set up Rack authentication
-  #
-  # I'm going to disable this for now, although later this might be a good way
-  # of providing security for shared hosts. TODO: figure out how to secure the
-  # app for use on shared hosts.
-  #
-#  use Rack::Auth::Basic do |username, password|
-#    [username, password] == ['admin', 'admin']
-#  end
 
   # Include flash notices
   #
@@ -91,6 +82,12 @@ class EnigmaMachine < Sinatra::Base
   # main Sinatra/thin thread once the periodic timer is added.
   #
   configure do
+    unless File.exist? File.join(Dir.getwd, 'config.yml')
+      FileUtils.cp(File.dirname(__FILE__) +  '/generators/config.yml', Dir.getwd)
+    end
+    raw_config = File.read(Dir.getwd + "/config.yml")
+    @@user = YAML.load(raw_config)['user']
+    @@auth_password = YAML.load(raw_config)['password']
     Video.reset_encoding_videos
     Thread.new do
       until EM.reactor_running?
@@ -99,6 +96,17 @@ class EnigmaMachine < Sinatra::Base
       queue = EncodingQueue.new
     end
   end
+
+  # Set up Rack authentication
+  #
+  # I'm going to disable this for now, although later this might be a good way
+  # of providing security for shared hosts. TODO: figure out how to secure the
+  # app for use on shared hosts.
+  #
+#  use Rack::Auth::Basic do |username, password|
+#    [username, password] == ['admin', 'admin']
+#  end
+
 
   # Shows the enigma status page.
   #
