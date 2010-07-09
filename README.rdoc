@@ -109,8 +109,8 @@ eats your mother.
 == Installation
 
 Enigmamachine is written in Ruby and uses the Sinatra web framework, the
-Datamapper ORM library, and the Eventmachine event-processing library.  If
-you're not a Ruby person, you don't need to care about any of this.
+Datamapper ORM library, the Eventmachine event-processing library, and the Thin
+webserver.  If you're not a Ruby person, you don't need to care about any of this.
 Enigmamachine can be triggered by any language that can send a POST request -
 so all you PHPistas, python-lovers, droopy-moustachists, or blue-suited
 java types can all use it just as easy as us fashionable-haircut-language
@@ -131,7 +131,7 @@ You'll need to add the following line to your ~/.bashrc file, as well:
 
  export PATH=/var/lib/gems/1.8/bin:$PATH
 
-Then _gem install enigmamachine_ should theoretically work.  You'll also need a copy of
+Then <i>gem install enigmamachine</i> should theoretically work.  You'll also need a copy of
 ffmpeg installed and available in your path. On Mac OS X, rubygems should
 already be installed, although you'll need to have a C compiler available
 (make sure you install the developer tools that came with your operating
