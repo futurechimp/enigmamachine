@@ -86,8 +86,8 @@ class EnigmaMachine < Sinatra::Base
       FileUtils.cp(File.dirname(__FILE__) +  '/generators/config.yml', Dir.getwd)
     end
     raw_config = File.read(Dir.getwd + "/config.yml")
-    @@user = YAML.load(raw_config)['user']
-    @@auth_password = YAML.load(raw_config)['password']
+    @@username = YAML.load(raw_config)['username']
+    @@password = YAML.load(raw_config)['password']
     Video.reset_encoding_videos
     Thread.new do
       until EM.reactor_running?
@@ -103,9 +103,9 @@ class EnigmaMachine < Sinatra::Base
   # of providing security for shared hosts. TODO: figure out how to secure the
   # app for use on shared hosts.
   #
-#  use Rack::Auth::Basic do |username, password|
-#    [username, password] == ['admin', 'admin']
-#  end
+  use Rack::Auth::Basic do |username, password|
+    [username, password] == [@@username, @@password]
+  end
 
 
   # Shows the enigma status page.
