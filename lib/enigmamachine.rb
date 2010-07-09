@@ -102,9 +102,7 @@ class EnigmaMachine < Sinatra::Base
 
   # Set up Rack authentication
   #
-  # I'm going to disable this for now, although later this might be a good way
-  # of providing security for shared hosts. TODO: figure out how to secure the
-  # app for use on shared hosts.
+  # Provides minimal security for shared hosts.
   #
   use Rack::Auth::Basic do |username, password|
     [username, password] == [@@username, @@password]
