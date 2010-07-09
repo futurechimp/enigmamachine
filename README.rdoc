@@ -56,7 +56,10 @@ Videos are encoded sequentially as they arrive.
 
 All requests, whether they come from your browser or from your code, are
 protected by HTTP basic auth.  By default, the username is
-<i>admin</i> and the password is <i>admin</i>.
+<i>admin</i> and the password is <i>admin</i>.  If you're accessing your
+Enigmamachine programatically, the server expects a Base64 encoded hash
+of the username and password, separated by a colon (":"), in a parameter
+called "HTTP_AUTHORIZATION".
 
 Programmatic requests in Ruby might look something like this:
 
