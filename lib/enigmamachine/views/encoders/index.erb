@@ -2,11 +2,13 @@
 	<h1 class="title">Available encoders</h1>
 	<div class="entry">
 		<% unless @encoders.empty? %>
-		    <ul>
-          <%= partial :'encoders/encoder', :collection => @encoders %>
-        </ul>
-        <% end %>
-        <p><a href="/encoders/new">New encoder</a></p>
+	    <ul>
+        <%= partial :'encoders/encoder', :collection => @encoders %>
+      </ul>
+    <% end %>
+      <p>
+        <a href="/encoders/new">New encoder</a>
+      </p>
 	</div>
 </div>
 
