@@ -45,7 +45,7 @@ exists so that you can configure your enigmamachine easily, and check its status
 Most of the time, though, your enigmamachine will be accessed not through a
 browser, but by another program.  Let's say you want your website to be able to
 enocode video.  You write the code for the video upload, so your web app can
-receive the video, and you do an HTTP call something like this:
+receive the video. When the upload is complete, make an HTTP call something like this in your code:
 
  POST http://localhost:2002/videos
 
@@ -54,8 +54,8 @@ with the params:
  params["video"] # the full path to a file on your local filesystem
  params["encoder_id"] # the id of an encoder defined in your database
 
-The enigmamachine will run all encoding tasks on the video.  If a new video is
-uploaded while the first one is still encoding, it will be placed in a queue.
+The enigmamachine will run all encoding tasks on the video, while your web application will be free to continue serving requests happily.  If a second video
+is uploaded while the first one is still encoding, it will be placed in a queue.
 Videos are encoded sequentially as they arrive.
 
 All requests, whether they come from your browser or from your code, are
