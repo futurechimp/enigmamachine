@@ -181,7 +181,7 @@ If this command doesn't make any sense to you, it's because you don't know that
 You can install rubygems, necessary sqlite headers, and a C compiler on
 righteous operating systems by typing:
 
- apt-get install rubygems ruby1.8-dev libopenssl-ruby build-essential libsqlite3-dev # as root
+ apt-get install rubygems ruby1.8-dev libopenssl-ruby build-essential libsqlite3-dev ffmpeg # as root
 
 You'll need to add the following line to your ~/.bashrc file, as well:
 
