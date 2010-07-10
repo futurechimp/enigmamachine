@@ -39,9 +39,13 @@ Once you've installed the gem (see below), you can do something like:
  cd enigma
  enigmamachine start  # -d to daemonize
 
-Then check it out in your browser, at http://localhost:2002.
+Then check it out in your browser, at http://localhost:2002.  This web interface
+exists so that you can configure your enigmamachine easily, and check its status.
 
-Your application receives a video, and you do an HTTP call like:
+Most of the time, though, your enigmamachine will be accessed not through a
+browser, but by another program.  Let's say you want your website to be able to
+enocode video.  You write the code for the video upload, so your web app can
+receive the video, and you do an HTTP call something like this:
 
  POST http://localhost:2002/videos
 
