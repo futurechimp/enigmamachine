@@ -9,7 +9,7 @@ begin
     gem.description = %Q{A RESTful video encoder which you can use as either a front-end to ffmpeg or headless on a server.}
     gem.email = "dave@caprica"
     gem.homepage = "http://github.com/futurechimp/enigmamachine"
-    gem.authors = ["dave"]
+    gem.authors = ["Dave Hrycyszyn"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_dependency "data_mapper", "=1.0.0"
     gem.add_dependency "eventmachine", "=0.12.10"
