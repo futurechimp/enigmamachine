@@ -99,6 +99,14 @@ Programmatic requests in Ruby might look something like this:
  EnigmaClient.new("admin", "admin").post("/path/to/your/uploaded/video.mp4", 1)
 
 
+A simpler, wget-based approach might look like this:
+
+ wget http://admin:admin@localhost:2002/videos --post-data 'video[file]=/path/to/your/video.mp4&encoder_id=1'
+
+<b>Don't use wget like this on a shared host, it's insecure</b> (read the wget
+docs for more on this).  This wget example is just to show you what's going on
+when using a simple tool that most programmers know how to use.
+
 == Encoders and Encoding Tasks
 
 When you POST the location of a video to your enigmamachine, you need to tell
