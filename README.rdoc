@@ -63,38 +63,36 @@ called "HTTP_AUTHORIZATION".
 
 Programmatic requests in Ruby might look something like this:
 
+# enigma_client.rb:
+
     require 'rubygems'
-    require 'httparty'
     require 'base64'
+    require 'ruby-debug'
+    require 'net/http'
+    require 'uri'
 
     class EnigmaClient
 
-      include HTTParty
-      base_uri 'localhost:2002'
-
       def initialize (u, p)
-        @auth = encode_credentials(u, p)
+        @username, @password = u, p
       end
 
       def post(path_to_video, encoder_id)
-        self.class.post('/videos', {
-          :body => {:video => {:file => path_to_video}, :encoder_id => encoder_id},
-          'HTTP_AUTHORIZATION' => @auth
-        })
-      end
-
-      private
-
-      def encode_credentials(username, password)
-        "Basic " + Base64.encode64("#{username}:#{password}")
+        request = {:body => {
+            :video => {:file => path_to_video},
+            :encoder_id => encoder_id
+          }}
+        Net::HTTP.post_form(
+          URI.parse("http://#{@username}:#{@password}@localhost:2002/videos"),
+          request)
       end
 
     end
 
-
-
  # Let's use it!
  #
+ irb
+ require 'enigma_client'
  EnigmaClient.new("admin", "admin").post("/path/to/your/uploaded/video.mp4", 1)
 
 
