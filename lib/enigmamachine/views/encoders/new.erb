@@ -1,19 +1,23 @@
 <div class="post">
-<h1 class="title">Create a new encoder</h1>
-<div class="entry">
-<% unless @encoder.errors.empty? %>
-  <div class="errors">
-    <h2>Errors on Encoder</h2>
-    <ul>
-    <% @encoder.errors.each do |error| %>
-      <li><%= error %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+  <h1 class="title">Create a new encoder</h1>
+  <div class="entry">
 
-<form action="/encoders" method="POST">
-  <%= partial :"encoders/form" %>
-</form>
-</div></div>
+    <% unless @encoder.errors.empty? %>
+      <div class="errors">
+        <h2>Errors on Encoder</h2>
+        <ul>
+        <% @encoder.errors.each do |error| %>
+          <li>
+            <%= error %>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <form action="/encoders" method="POST">
+      <%= partial :"encoders/form" %>
+    </form>
+  </div>
+</div>
 

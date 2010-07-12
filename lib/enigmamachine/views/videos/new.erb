@@ -1,19 +1,22 @@
 <div class="post">
-<h1 class="title">Create a new video</h1>
-<div class="entry">
-<% unless @video.errors.empty? %>
-  <div class="errors">
-    <h2>Errors on video</h2>
-    <ul>
-    <% @video.errors.each do |error| %>
-      <li><%= error %></li>
+  <h1 class="title">Create a new video</h1>
+  <div class="entry">
+    <% unless @video.errors.empty? %>
+      <div class="errors">
+        <h2>Errors on video</h2>
+        <ul>
+        <% @video.errors.each do |error| %>
+          <li>
+            <%= error %>
+          </li>
+        <% end %>
+        </ul>
+      </div>
     <% end %>
-    </ul>
-  </div>
-<% end %>
 
-<form action="/videos" method="POST">
-  <%= partial :"videos/form" %>
-</form>
-</div></div>
+    <form action="/videos" method="POST">
+      <%= partial :"videos/form" %>
+    </form>
+  </div>
+</div>
 

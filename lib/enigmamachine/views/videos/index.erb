@@ -1,36 +1,39 @@
 <div class="post">
-<h1 class="title">Videos</h1>
-<div class="entry">
+  <h1 class="title">Videos</h1>
+  <div class="entry">
 
-<p><a href="/videos/new">New video</a></p>
+    <p>
+      <a href="/videos/new">New video</a>
+    </p>
 
-<% unless @encoding_videos.empty? %>
-  <h2>Currently encoding</h2>
-  <ul>
-    <%= partial :"videos/video", :collection => @encoding_videos %>
-  </ul>
-<% end %>
+    <% unless @encoding_videos.empty? %>
+      <h2>Currently encoding</h2>
+      <ul>
+        <%= partial :"videos/video", :collection => @encoding_videos %>
+      </ul>
+    <% end %>
 
-<% unless @unencoded_videos.empty? %>
-  <h2>Waiting to encode</h2>
-  <ul>
-    <%= partial :"videos/video", :collection => @unencoded_videos %>
-  </ul>
-<% end %>
+    <% unless @unencoded_videos.empty? %>
+      <h2>Waiting to encode</h2>
+      <ul>
+        <%= partial :"videos/video", :collection => @unencoded_videos %>
+      </ul>
+    <% end %>
 
-<% unless @completed_videos.empty? %>
-  <h2>Completed</h2>
-  <ul>
-    <%= partial :"videos/video", :collection => @completed_videos %>
-  </ul>
-<% end %>
+    <% unless @completed_videos.empty? %>
+      <h2>Completed</h2>
+      <ul>
+        <%= partial :"videos/video", :collection => @completed_videos %>
+      </ul>
+    <% end %>
 
-<% unless @videos_with_errors.empty? %>
-  <h2>Failed to encode</h2>
-  <ul>
-    <%= partial :"videos/video", :collection => @videos_with_errors %>
-  </ul>
-<% end %>
+    <% unless @videos_with_errors.empty? %>
+      <h2>Failed to encode</h2>
+      <ul>
+        <%= partial :"videos/video", :collection => @videos_with_errors %>
+      </ul>
+    <% end %>
 
-</div></div>
+  </div>
+</div>
 

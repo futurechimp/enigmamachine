@@ -1,11 +1,15 @@
-
-<p><strong>File location:</strong><br/>
-<input name="video[file]" id="video_file" value="<%= @video.file %>" size="50"></input></p>
+<p>
+  <strong>File location:</strong>
+  <br/>
+  <input name="video[file]" id="video_file" value="<%= @video.file %>" size="50"></input>
+</p>
 <select id="encoder_id" name="encoder_id">
 <% @encoders.each do |e| %>
   <option value="<%= e.id %>"><%= e.name %></option>
 <% end %>
 </select>
 <input type="submit" value="Save"/>
-<p><a href="/videos">cancel</a></p>
+<p>
+  <a href="/videos">cancel</a>
+</p>
 

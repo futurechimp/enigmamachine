@@ -1,19 +1,22 @@
 <div class="post">
-<h1 class="title">Encoder: <%= @encoder.name %></h1>
-<div class="entry">
+  <h1 class="title">Encoder: <%= @encoder.name %></h1>
+  <div class="entry">
+    <p>
+      Encoding tasks that this encoder performs:
+    </p>
+    <% if @encoder.encoding_tasks.empty? %>
+      None.
+    <% end %>
+    <%= partial(:"encoders/encoding_task", :collection => @encoder.encoding_tasks) %>
 
+    <p>
+      Add a <a href="/encoding_tasks/new/<%= @encoder.id%>">new</a> task to
+      this encoder.
+    </p>
 
-
-<p>Encoding tasks that this encoder performs:</p>
-<% if @encoder.encoding_tasks.empty? %>
-  None.
-<% end %>
-<%= partial(:"encoders/encoding_task", :collection => @encoder.encoding_tasks) %>
-
-<p>Add a <a href="/encoding_tasks/new/<%= @encoder.id%>">new</a> task to this encoder.</p>
-
-<p><a href="/encoders">Back</a> to the list of available encoders.</p>
-
-</div>
+    <p>
+      <a href="/encoders">Back</a> to the list of available encoders.
+    </p>
+  </div>
 </div>
 

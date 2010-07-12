@@ -1,25 +1,25 @@
 <div class="post">
-<h1 class="title">Edit an encoding task</h1>
-<div class="entry">
+  <h1 class="title">Edit an encoding task</h1>
+  <div class="entry">
 
-<% unless @encoding_task.errors.empty? %>
-  <div class="errors">
-    <h2>Errors on Encoding Task</h2>
-    <ul>
-    <% @encoding_task.errors.each do |error| %>
-      <li><%= error %></li>
+    <% unless @encoding_task.errors.empty? %>
+      <div class="errors">
+        <h2>Errors on Encoding Task</h2>
+        <ul>
+        <% @encoding_task.errors.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+        </ul>
+      </div>
     <% end %>
-    </ul>
+
+    <form id="task-<%= @encoding_task.id%>-edit"
+          action="/encoding_tasks/<%= @encoding_task.id %>"
+          method="POST">
+      <input name="_method" value="PUT" type="hidden"></input>
+      <%= partial(:'encoding_tasks/form') %>
+    </form>
+
   </div>
-<% end %>
-
-<form id="task-<%= @encoding_task.id%>-edit"
-      action="/encoding_tasks/<%= @encoding_task.id %>"
-      method="POST">
-  <input name="_method" value="PUT" type="hidden"></input>
-  <%= partial(:'encoding_tasks/form') %>
-</form>
-
-</div>
 </div>
 
