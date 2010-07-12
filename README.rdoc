@@ -71,7 +71,6 @@ Programmatic requests in Ruby might look something like this:
 
     require 'rubygems'
     require 'base64'
-    require 'ruby-debug'
     require 'net/http'
     require 'uri'
 
