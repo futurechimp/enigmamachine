@@ -62,7 +62,8 @@ Videos are encoded sequentially as they arrive.
 
 All requests, whether they come from your browser or from your code, are
 protected by HTTP basic auth.  By default, the username is
-<i>admin</i> and the password is <i>admin</i>.  You can
+<i>admin</i> and the password is <i>admin</i>.  You can change the username and
+password in the config.yml file which will be generated on first use.
 
 Programmatic requests in Ruby might look something like this:
 
