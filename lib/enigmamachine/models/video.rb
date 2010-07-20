@@ -14,6 +14,7 @@ class Video
   property :created_at, DateTime
   property :updated_at, DateTime
   property :encoder_id, Integer, :required => true
+  property :callback_url, String, :required => true, :length => (1..254)
 
   belongs_to :encoder
 

@@ -1,4 +1,6 @@
 require File.dirname(__FILE__) + '/video'
+require 'net/http'
+require 'uri'
 
 # An encoding profile which can be applied to a video.  It has a name and is
 # composed of a bunch of EncodingTasks.
@@ -43,6 +45,7 @@ class Encoder
     }
     completion_callback = proc {|result|
       if task == encoding_tasks.last
+        do_callback_for(video)
         video.state = "complete"
         video.save
       else
@@ -52,6 +55,13 @@ class Encoder
       end
     }
     EventMachine.defer(encoding_operation, completion_callback)
+  end
+
+  def do_callback_for(video)
+    begin
+      Net::HTTP.get(URI.parse(video.callback_url))
+    rescue
+    end
   end
 
 end

@@ -13,6 +13,14 @@ class TestVideo <  Test::Unit::TestCase
       assert !resource.valid?
     end
 
+    should "be invalid without a callback_url" do
+      resource = ::Video.make_unsaved
+      resource.callback_url = ""
+      assert !resource.valid?
+      resource.callback_url = nil
+      assert !resource.valid?
+    end
+
     should "be valid with a file path" do
       resource = ::Video.make
       resource.file = "foo.mpg"

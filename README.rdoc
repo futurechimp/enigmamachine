@@ -82,9 +82,12 @@ Programmatic requests in Ruby might look something like this:
         @auth = encode_credentials(u, p)
       end
 
-      def post(path_to_video, encoder_id)
+      def post(path_to_video, encoder_id, callback_url)
         self.class.post("/videos", {
-          :body => {:video => {:file => path_to_video}, :encoder_id => encoder_id},
+          :body => {:video => {
+            :file => path_to_video,
+            :callback_url => callback_url
+            }, :encoder_id => encoder_id},
           :basic_auth => @auth})
       end
 
@@ -101,12 +104,12 @@ Programmatic requests in Ruby might look something like this:
  #
  irb
  require 'enigma_client'
- EnigmaClient.new("admin", "admin").post("/path/to/your/uploaded/video.mp4", 1)
+ EnigmaClient.new("admin", "admin").post("/path/to/your/uploaded/video.mp4", 1, "http://example.org/call/back/id")
 
 
 A simpler, wget-based approach might look like this:
 
- wget http://admin:admin@localhost:2002/videos --post-data 'video[file]=/path/to/your/video.mp4&encoder_id=1'
+ wget http://admin:admin@localhost:2002/videos --post-data 'video[file]=/path/to/your/video.mp4&video[callback_url]=http://example.org/call/back/id&encoder_id=1'
 
 <b>Don't use wget like this on a shared host, it's insecure</b> (read the wget
 docs for more on this).  This wget example is just to show you what's going on
@@ -205,9 +208,9 @@ system).
 
 == Status
 
-This thing is still pre-release.
+This thing is still pre-release, but it is usable in a basic form now.
 
-I'm just working on getting the gem dependencies correct, so you may need to
+I'm still working on getting the gem dependencies correct, so you may need to
 manually install a few things to get it to work.  You'll also need a working
 copy of ffmpeg available on your path.
 
