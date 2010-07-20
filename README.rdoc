@@ -32,6 +32,7 @@ with good threading support it still sort of sucks. With Enigmamachine, all you
 need to do to trigger encoding of a video is shoot off an HTTP request, and
 everything else is handled for you.
 
+
 == Using it
 
 Once you've installed the gem (see below), you can do something like:
