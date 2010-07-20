@@ -6,19 +6,25 @@ class TestVideo <  Test::Unit::TestCase
   context "A Video instance" do
 
     should "be invalid without a file path" do
-      resource = ::Video.make_unsaved
+      resource = ::Video.make
       resource.file = ""
       assert !resource.valid?
       resource.file = nil
       assert !resource.valid?
     end
 
-    should "be invalid without a callback_url" do
-      resource = ::Video.make_unsaved
+    should "be valid without a callback_url" do
+      resource = ::Video.make
       resource.callback_url = ""
-      assert !resource.valid?
+      assert resource.valid?
       resource.callback_url = nil
-      assert !resource.valid?
+      assert resource.valid?
+    end
+
+    should "be valid with a callback_url" do
+      resource = ::Video.make
+      resource.callback_url = "blah"
+      assert resource.valid?
     end
 
     should "be valid with a file path" do
