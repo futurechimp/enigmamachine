@@ -45,9 +45,9 @@ class Encoder
     }
     completion_callback = proc {|result|
       if task == encoding_tasks.last
-        do_callback_for(video)
         video.state = "complete"
         video.save
+        video.notify_complete
       else
         next_task_index = current_task_index + 1
         next_task = encoding_tasks[next_task_index]
@@ -55,13 +55,6 @@ class Encoder
       end
     }
     EventMachine.defer(encoding_operation, completion_callback)
-  end
-
-  def do_callback_for(video)
-    begin
-      Net::HTTP.get(URI.parse(video.callback_url))
-    rescue
-    end
   end
 
 end
