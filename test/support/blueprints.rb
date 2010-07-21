@@ -10,9 +10,12 @@ Video.blueprint do
   encoder
   file { File.dirname(__FILE__) + "/afile.mpg" }
   state { "unencoded" }
-  callback_url { "http://example.org/call/back/id" }
   created_at DateTime.now
   updated_at DateTime.now
+end
+
+Video.blueprint(:with_callback) do
+  callback_url { "http://example.com/call/back/id" }
 end
 
 EncodingTask.blueprint do

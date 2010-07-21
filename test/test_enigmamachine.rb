@@ -513,6 +513,24 @@ class TestEnigmamachine < Test::Unit::TestCase
         end
       end
 
+      context "when video[callback_url] is set" do
+        setup do
+          @num_videos = Video.count
+          post "/videos", {
+            :video => Video.plan(:with_callback),
+            :encoder_id => Encoder.make.id}, basic_auth_creds
+          follow_redirect!
+        end
+
+        should "create a video" do
+          assert_equal @num_videos + 1, Video.count
+        end
+
+        should "redirect to /videos" do
+          assert_equal "http://example.org/videos", last_request.url
+        end
+      end
+
       context "and invalid video params" do
         setup do
           @num_videos = Video.count
