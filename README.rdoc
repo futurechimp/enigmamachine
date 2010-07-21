@@ -68,7 +68,7 @@ protected by HTTP basic auth.  By default, the username is
 password in the config.yml file which will be generated on first use.
 
 When a video has finished encoding, the main web application might want to know.
-The optional video[callback_url] parameter tells enigmamachine to execute a GET
+The optional @video[callback_url]@ parameter tells enigmamachine to execute a GET
 request to the callback url when video encoding is complete.
 
 Programmatic requests in Ruby might look something like this:
