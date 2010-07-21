@@ -53,7 +53,8 @@ receive the video. When the upload is complete, make an HTTP call something like
 
 with the params:
 
- "video=/foo/bar/blah.mp4" # the full path to a file on your local filesystem
+ "video[file]=/foo/bar/blah.mp4" # the full path to a file on your local filesystem
+ "video[callback_url]=http://example.org/call/back/id" # an optional callback url
  "encoder_id=1" # the id of an encoder defined in your enigmamachine database
 
 The enigmamachine will run all encoding tasks on the video, while your web
@@ -65,6 +66,10 @@ All requests, whether they come from your browser or from your code, are
 protected by HTTP basic auth.  By default, the username is
 <i>admin</i> and the password is <i>admin</i>.  You can change the username and
 password in the config.yml file which will be generated on first use.
+
+When a video has finished encoding, the main web application might want to know.
+The optional video[callback_url] parameter tells enigmamachine to execute a GET
+request to the callback url when video encoding is complete.
 
 Programmatic requests in Ruby might look something like this:
 
