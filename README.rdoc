@@ -234,3 +234,5 @@ copy of ffmpeg available on your path.
 
 Copyright (c) 2010 Dave Hrycyszyn. See LICENSE for details.
 
+Enigmamachine is a headlabs project.  See http://labs.headlondon.com for more.
+
