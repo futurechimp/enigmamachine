@@ -37,6 +37,7 @@ class EnigmaMachine < Sinatra::Base
 
   configure :development do
     db = "sqlite3:///#{Dir.pwd}/enigmamachine.sqlite3"
+    DataMapper::Logger.new(STDOUT, :debug)
     DataMapper.setup(:default, db)
   end
 
