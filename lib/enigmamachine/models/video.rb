@@ -8,7 +8,7 @@ class Video
   # Properties
   #
   property :id, Serial
-  property :file, String,  :required => true, :length => (1..254)
+  property :file, String,  :required => true, :length => (1..510)
   property :state, String, :required => true,
     :length => (1..10), :default => 'unencoded'
   property :created_at, DateTime

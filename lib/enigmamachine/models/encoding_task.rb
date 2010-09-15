@@ -8,7 +8,7 @@ class EncodingTask
   property :id, Serial
   property :name, String, :required => true, :length => (1..254)
   property :output_file_suffix, String, :required => true, :length => (1..254)
-  property :command, String, :required => true, :length => (1..254)
+  property :command, String, :required => true, :length => (1..510)
   property :encoder_id, Integer
 
   # Associations
