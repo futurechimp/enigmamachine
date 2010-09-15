@@ -13,6 +13,9 @@ tmtags
 ## VIM
 *.swp
 
+## NetBeans
+nbproject
+
 ## PROJECT::GENERAL
 coverage
 rdoc
