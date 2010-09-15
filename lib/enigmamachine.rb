@@ -85,6 +85,7 @@ class EnigmaMachine < Sinatra::Base
   #
   use Rack::Session::Cookie
   use Rack::Flash
+  use Rack::MethodOverride
 
   # Starts the enigma encoding thread. The thread will be reabsorbed into the
   # main Sinatra/thin thread once the periodic timer is added.
