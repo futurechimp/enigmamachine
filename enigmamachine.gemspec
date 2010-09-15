@@ -93,31 +93,31 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
-      s.add_runtime_dependency(%q<data_mapper>, ["= 1.0.0"])
+      s.add_runtime_dependency(%q<data_mapper>, [">= 1.0.0"])
       s.add_runtime_dependency(%q<eventmachine>, ["= 0.12.10"])
-      s.add_runtime_dependency(%q<dm-sqlite-adapter>, ["= 1.0.0"])
+      s.add_runtime_dependency(%q<dm-sqlite-adapter>, [">= 1.0.0"])
       s.add_runtime_dependency(%q<rack-flash>, [">= 0"])
       s.add_runtime_dependency(%q<ruby-debug>, [">= 0"])
-      s.add_runtime_dependency(%q<sinatra>, ["= 1.0.0"])
+      s.add_runtime_dependency(%q<sinatra>, [">= 1.0.0"])
       s.add_runtime_dependency(%q<thin>, [">= 0"])
     else
       s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
-      s.add_dependency(%q<data_mapper>, ["= 1.0.0"])
+      s.add_dependency(%q<data_mapper>, [">= 1.0.0"])
       s.add_dependency(%q<eventmachine>, ["= 0.12.10"])
-      s.add_dependency(%q<dm-sqlite-adapter>, ["= 1.0.0"])
+      s.add_dependency(%q<dm-sqlite-adapter>, [">= 1.0.0"])
       s.add_dependency(%q<rack-flash>, [">= 0"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
-      s.add_dependency(%q<sinatra>, ["= 1.0.0"])
+      s.add_dependency(%q<sinatra>, [">= 1.0.0"])
       s.add_dependency(%q<thin>, [">= 0"])
     end
   else
     s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
-    s.add_dependency(%q<data_mapper>, ["= 1.0.0"])
+    s.add_dependency(%q<data_mapper>, [">= 1.0.0"])
     s.add_dependency(%q<eventmachine>, ["= 0.12.10"])
-    s.add_dependency(%q<dm-sqlite-adapter>, ["= 1.0.0"])
+    s.add_dependency(%q<dm-sqlite-adapter>, [">= 1.0.0"])
     s.add_dependency(%q<rack-flash>, [">= 0"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
-    s.add_dependency(%q<sinatra>, ["= 1.0.0"])
+    s.add_dependency(%q<sinatra>, [">= 1.0.0"])
     s.add_dependency(%q<thin>, [">= 0"])
   end
 end
