@@ -11,12 +11,12 @@ begin
     gem.homepage = "http://github.com/futurechimp/enigmamachine"
     gem.authors = ["Dave Hrycyszyn"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    gem.add_dependency "data_mapper", "=1.0.0"
-    gem.add_dependency "eventmachine", "=0.12.10"
-    gem.add_dependency "dm-sqlite-adapter", "=1.0.0"
+    gem.add_dependency "data_mapper", ">=1.0.0"
+    gem.add_dependency "eventmachine", ">=0.12.10"
+    gem.add_dependency "dm-sqlite-adapter", ">=1.0.0"
     gem.add_dependency "rack-flash"
     gem.add_dependency "ruby-debug"
-    gem.add_dependency "sinatra", "=1.0.0"
+    gem.add_dependency "sinatra", ">=1.0.0"
     gem.add_dependency "thin"
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
