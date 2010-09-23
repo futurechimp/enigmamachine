@@ -16,6 +16,8 @@ class Video
   property :encoder_id, Integer, :required => true
   property :callback_url, String
 
+  validates_with_method :file, :method => :check_file
+
   belongs_to :encoder
 
   # Notifies a calling application that processing has completed by sending
@@ -66,6 +68,14 @@ class Video
       video.state = "unencoded"
       video.save!
     end
+  end
+
+  private
+
+  def check_file
+    return [false, "#{self.file} is not exist"] if !File.exist? self.file
+    return [false, "#{self.file} is a directory"] if File.directory? self.file
+    return true
   end
 
 end
