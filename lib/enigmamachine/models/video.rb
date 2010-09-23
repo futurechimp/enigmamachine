@@ -17,7 +17,8 @@ class Video
   property :callback_url, String
 
   validates_with_method :file, :method => :check_file
-
+  validates_uniqueness_of :file, :scope => :encoder_id,
+    :message => "Same file with same encoder already exist"
   belongs_to :encoder
 
   # Notifies a calling application that processing has completed by sending
