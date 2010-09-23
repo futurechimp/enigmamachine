@@ -270,5 +270,13 @@ class EnigmaMachine < Sinatra::Base
     end
   end
 
+  # Deletes a video.
+  #
+  delete '/videos/:id' do |id|
+    @video = Video.get(id)
+    @video.destroy
+    redirect "/videos"
+  end
+
 end
 

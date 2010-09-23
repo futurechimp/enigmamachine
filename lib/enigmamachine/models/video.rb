@@ -21,6 +21,8 @@ class Video
     :message => "Same file with same encoder already exist"
   belongs_to :encoder
 
+  before :destroy, :check_destroy
+
   # Notifies a calling application that processing has completed by sending
   # a GET request to the video's callback_url.
   #
@@ -77,6 +79,14 @@ class Video
     return [false, "#{self.file} is not exist"] if !File.exist? self.file
     return [false, "#{self.file} is a directory"] if File.directory? self.file
     return true
+  end
+
+  def check_destroy
+    return true if (self.state != 'encoding')
+    #TODO Killing encoding process
+    result = false
+    return true if result
+    throw :halt
   end
 
 end
