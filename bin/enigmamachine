@@ -2,7 +2,7 @@
 
 # Enigmamachine command line interface script.
 # Run <tt>enigmamachine -h</tt> to get more usage.
-require File.dirname(__FILE__) + '/../lib/enigmamachine'
+require 'rubygems'
 require 'thin'
 
 rackup_file = "#{File.dirname(__FILE__)}/../lib/enigmamachine/config.ru"
