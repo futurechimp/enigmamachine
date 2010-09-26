@@ -10,6 +10,7 @@ require 'dm-validations'
 require 'dm-migrations'
 require 'open3'
 require 'logger'
+require 'streamio-ffmpeg'
 
 # Extensions to Sinatra
 #
