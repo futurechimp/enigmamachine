@@ -91,7 +91,7 @@ class TestVideo <  Test::Unit::TestCase
   end
 
   def clear_videos
-    Video.all.each  {|v| v.destroy }
+    Video.all.each  {|v| v.destroy! }
   end
 
 end

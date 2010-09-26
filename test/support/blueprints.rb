@@ -3,7 +3,7 @@ require 'faker'
 require 'sham'
 
 Encoder.blueprint do
-  name {"Blah encoder"}
+  name { Faker::Name.name }
 end
 
 Video.blueprint do
@@ -21,13 +21,13 @@ end
 EncodingTask.blueprint do
   name { "320x240 flv"}
   output_file_suffix { ".foo.flv" }
-  command { "-ss 00:00:02 -t 00:00:01 -vcodec mjpeg -vframes 1 -an -f rawvideo -s 180x136 -y"}
+  command { "-ss 00:00:02 -t 00:00:01 -vcodec mjpeg -vframes 1 -an -f rawvideo -s 180x136"}
 end
 
 EncodingTask.blueprint(:with_encoder) do
   name { "320x240 flv"}
   output_file_suffix { ".foo.flv" }
-  command { "-ss 00:00:02 -t 00:00:01 -vcodec mjpeg -vframes 1 -an -f rawvideo -s 180x136 -y"}
+  command { "-ss 00:00:02 -t 00:00:01 -vcodec mjpeg -vframes 1 -an -f rawvideo -s 180x136"}
   encoder
 end
 
