@@ -76,6 +76,8 @@ class Video
   private
 
   def check_file
+    return [false, "Give a file name, not nil"] if self.file.nil?
+    return [false, "Give a file name, not clear string"] if self.file.to_s.empty?
     return [false, "#{self.file} is not exist"] unless File.exist? self.file
     return [false, "#{self.file} is a directory"] if File.directory? self.file
     movie = FFMPEG::Movie.new(self.file)
