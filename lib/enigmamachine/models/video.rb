@@ -76,8 +76,10 @@ class Video
   private
 
   def check_file
-    return [false, "#{self.file} is not exist"] if !File.exist? self.file
+    return [false, "#{self.file} is not exist"] unless File.exist? self.file
     return [false, "#{self.file} is a directory"] if File.directory? self.file
+    movie = FFMPEG::Movie.new(self.file)
+    return [false, "#{self.file} is not a media file"] unless movie.valid?
     return true
   end
 
