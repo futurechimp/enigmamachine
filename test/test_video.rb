@@ -5,12 +5,18 @@ class TestVideo <  Test::Unit::TestCase
 
   context "A Video instance" do
 
-    should "be invalid without a file path" do
+    should "be invalid with a bad file path" do
       resource = ::Video.make
       resource.file = ""
-      assert !resource.valid?
+      assert(!resource.valid?, "must not be empty")
       resource.file = nil
-      assert !resource.valid?
+      assert(!resource.valid?, "must not be nil")
+      resource.file = "/fdfdf/sfdsdfsd/fse.gfr"
+      assert(!resource.valid?, "must be exist")
+      resource.file = File.dirname(__FILE__)
+      assert(!resource.valid?, "must not be a directory")
+      resource.file = __FILE__
+      assert(!resource.valid?, "must be media file")
     end
 
     should "be valid without a callback_url" do
@@ -27,9 +33,8 @@ class TestVideo <  Test::Unit::TestCase
       assert resource.valid?
     end
 
-    should "be valid with a file path" do
+    should "be valid with a correct file path" do
       resource = ::Video.make
-      resource.file = "foo.mpg"
       assert resource.valid?
     end
 
