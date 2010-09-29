@@ -81,6 +81,48 @@ class TestVideo <  Test::Unit::TestCase
       end
     end
 
+    context "when try to delete any kind of videos from base" do
+      setup do
+        clear_videos
+        5.times { Video.make }
+      end
+
+      should "be delete an unencoded videos" do
+        count = Video.unencoded.count
+        2.times { Video.unencoded.first.destroy }
+        assert_equal count - 2, Video.unencoded.count
+      end
+
+      should "be delete a completed videos" do
+        3.times { Video.unencoded.first.update(:state => "complete") }
+        count = Video.complete.count
+        2.times { Video.complete.first.destroy }
+        assert_equal count - 2, Video.complete.count
+      end
+
+      should "be delete a videos with errors" do
+        3.times { Video.unencoded.first.update(:state => "error") }
+        count = Video.with_errors.count
+        2.times { Video.with_errors.first.destroy  }
+        assert_equal count - 2, Video.with_errors.count
+      end
+
+      should "not be delete an encoding videos" do
+        3.times { Video.unencoded.first.update(:state => "encoding") }
+        count = Video.encoding.count
+        2.times { Video.encoding.first.destroy }
+        assert_equal count, Video.encoding.count
+      end
+
+      should "be hard delete an encoding videos" do
+        3.times { Video.unencoded.first.update(:state => "encoding") }
+        count = Video.encoding.count
+        2.times { Video.encoding.first.destroy! }
+        assert_equal count - 2, Video.encoding.count
+      end
+
+    end
+
     should "be able to grab all completed videos" do
       assert Video.respond_to? "complete"
     end

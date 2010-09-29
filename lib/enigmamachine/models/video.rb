@@ -88,7 +88,7 @@ class Video
   def check_destroy
     return true if (self.state != 'encoding')
     encoder = Encoder.get(self.encoder_id)
-    return true if self.stop_encode
+    return true if stop_encode
     throw :halt
   end
 
