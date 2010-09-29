@@ -23,6 +23,8 @@ class Video
 
   before :destroy, :check_destroy
 
+  default_scope(:default).update(:order => [:created_at.asc])
+
   # Notifies a calling application that processing has completed by sending
   # a GET request to the video's callback_url.
   #
