@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Hrycyszyn"]
-  s.date = %q{2010-09-23}
+  s.date = %q{2010-09-26}
   s.default_executable = %q{enigmamachine}
   s.description = %q{A RESTful video encoder which you can use as either a front-end to ffmpeg or headless on a server.}
   s.email = %q{dave@caprica}
@@ -99,6 +99,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rack-flash>, [">= 0"])
       s.add_runtime_dependency(%q<ruby-debug>, [">= 0"])
       s.add_runtime_dependency(%q<sinatra>, [">= 1.0.0"])
+      s.add_runtime_dependency(%q<streamio-ffmpeg>, [">= 0.7.3"])
       s.add_runtime_dependency(%q<thin>, [">= 0"])
     else
       s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
@@ -108,6 +109,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rack-flash>, [">= 0"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<sinatra>, [">= 1.0.0"])
+      s.add_dependency(%q<streamio-ffmpeg>, [">= 0.7.3"])
       s.add_dependency(%q<thin>, [">= 0"])
     end
   else
@@ -118,6 +120,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rack-flash>, [">= 0"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<sinatra>, [">= 1.0.0"])
+    s.add_dependency(%q<streamio-ffmpeg>, [">= 0.7.3"])
     s.add_dependency(%q<thin>, [">= 0"])
   end
 end

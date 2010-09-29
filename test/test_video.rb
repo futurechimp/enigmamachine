@@ -5,12 +5,18 @@ class TestVideo <  Test::Unit::TestCase
 
   context "A Video instance" do
 
-    should "be invalid without a file path" do
+    should "be invalid with a bad file path" do
       resource = ::Video.make
       resource.file = ""
-      assert !resource.valid?
+      assert(!resource.valid?, "must not be empty")
       resource.file = nil
-      assert !resource.valid?
+      assert(!resource.valid?, "must not be nil")
+      resource.file = "/fdfdf/sfdsdfsd/fse.gfr"
+      assert(!resource.valid?, "must be exist")
+      resource.file = File.dirname(__FILE__)
+      assert(!resource.valid?, "must not be a directory")
+      resource.file = __FILE__
+      assert(!resource.valid?, "must be media file")
     end
 
     should "be valid without a callback_url" do
@@ -27,9 +33,8 @@ class TestVideo <  Test::Unit::TestCase
       assert resource.valid?
     end
 
-    should "be valid with a file path" do
+    should "be valid with a correct file path" do
       resource = ::Video.make
-      resource.file = "foo.mpg"
       assert resource.valid?
     end
 
@@ -76,6 +81,48 @@ class TestVideo <  Test::Unit::TestCase
       end
     end
 
+    context "when try to delete any kind of videos from base" do
+      setup do
+        clear_videos
+        5.times { Video.make }
+      end
+
+      should "be delete an unencoded videos" do
+        count = Video.unencoded.count
+        2.times { Video.unencoded.first.destroy }
+        assert_equal count - 2, Video.unencoded.count
+      end
+
+      should "be delete a completed videos" do
+        3.times { Video.unencoded.first.update(:state => "complete") }
+        count = Video.complete.count
+        2.times { Video.complete.first.destroy }
+        assert_equal count - 2, Video.complete.count
+      end
+
+      should "be delete a videos with errors" do
+        3.times { Video.unencoded.first.update(:state => "error") }
+        count = Video.with_errors.count
+        2.times { Video.with_errors.first.destroy  }
+        assert_equal count - 2, Video.with_errors.count
+      end
+
+      should "not be delete an encoding videos" do
+        3.times { Video.unencoded.first.update(:state => "encoding") }
+        count = Video.encoding.count
+        2.times { Video.encoding.first.destroy }
+        assert_equal count, Video.encoding.count
+      end
+
+      should "be hard delete an encoding videos" do
+        3.times { Video.unencoded.first.update(:state => "encoding") }
+        count = Video.encoding.count
+        2.times { Video.encoding.first.destroy! }
+        assert_equal count - 2, Video.encoding.count
+      end
+
+    end
+
     should "be able to grab all completed videos" do
       assert Video.respond_to? "complete"
     end
@@ -91,7 +138,7 @@ class TestVideo <  Test::Unit::TestCase
   end
 
   def clear_videos
-    Video.all.each  {|v| v.destroy }
+    Video.all.each  {|v| v.destroy! }
   end
 
 end

@@ -10,6 +10,7 @@ require 'dm-validations'
 require 'dm-migrations'
 require 'open3'
 require 'logger'
+require 'streamio-ffmpeg'
 
 # Extensions to Sinatra
 #
@@ -268,6 +269,14 @@ class EnigmaMachine < Sinatra::Base
       @encoders = Encoder.all
       erb :'videos/new'
     end
+  end
+
+  # Deletes a video.
+  #
+  delete '/videos/:id' do |id|
+    @video = Video.get(id)
+    @video.destroy
+    redirect "/videos"
   end
 
 end

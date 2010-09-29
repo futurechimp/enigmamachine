@@ -1,6 +1,11 @@
 <% video = videos_video %>
 <li>
   <strong><%= video.state %></strong> - <%=h video.file %> -
-  created at <%=h video.created_at.strftime("%m/%d/%Y at  %H:%M:%S")%><br/>
+  created at <%=h video.created_at.strftime("%m/%d/%Y at  %H:%M:%S")%>
+  <form action="/videos/<%= video.id %>" method="POST">
+    <input name="_method" value="DELETE" type="hidden"/>
+    <input type="submit" value="Delete"/>
+  </form>
+  <br/>
 </li>
 

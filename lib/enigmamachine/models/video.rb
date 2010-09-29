@@ -16,7 +16,14 @@ class Video
   property :encoder_id, Integer, :required => true
   property :callback_url, String
 
+  validates_with_method :file, :method => :check_file
+  validates_uniqueness_of :file, :scope => :encoder_id,
+    :message => "Same file with same encoder already exist"
   belongs_to :encoder
+
+  before :destroy, :check_destroy
+
+  default_scope(:default).update(:order => [:created_at.asc])
 
   # Notifies a calling application that processing has completed by sending
   # a GET request to the video's callback_url.
@@ -66,6 +73,30 @@ class Video
       video.state = "unencoded"
       video.save!
     end
+  end
+
+  private
+
+  def check_file
+    return [false, "Give a file name, not nil"] if self.file.nil?
+    return [false, "Give a file name, not clear string"] if self.file.to_s.empty?
+    return [false, "#{self.file} is not exist"] unless File.exist? self.file
+    return [false, "#{self.file} is a directory"] if File.directory? self.file
+    movie = FFMPEG::Movie.new(self.file)
+    return [false, "#{self.file} is not a media file"] unless movie.valid?
+    return true
+  end
+
+  def check_destroy
+    return true if (self.state != 'encoding')
+    encoder = Encoder.get(self.encoder_id)
+    return true if stop_encode
+    throw :halt
+  end
+
+  def stop_encode
+    return false
+    #TODO Kill the encoder process
   end
 
 end

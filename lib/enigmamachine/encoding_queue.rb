@@ -6,6 +6,7 @@ class EncodingQueue
   # starts looking for unencoded videos.
   #
   def initialize
+    @threads = YAML.load_file(Dir.getwd + '/config.yml')['threads'] if @threads.nil?
     EM.add_periodic_timer(5) {
       encode_next_video
     }
@@ -15,7 +16,7 @@ class EncodingQueue
   # Gets the next unencoded Video from the database and starts encoding it.
   #
   def encode_next_video
-    if Video.unencoded.count > 0 && ::Video.encoding.count == 0
+    if Video.unencoded.count > 0 && ::Video.encoding.count < @threads
       video = Video.unencoded.first
       begin
         video.encoder.encode(video)
