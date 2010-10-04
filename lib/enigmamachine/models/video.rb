@@ -18,7 +18,7 @@ class Video
 
   validates_with_method :file, :method => :check_file
   validates_uniqueness_of :file, :scope => :encoder_id,
-    :message => "Same file with same encoder already exist"
+    :message => "Same file with same encoder already exists"
   belongs_to :encoder
 
   before :destroy, :check_destroy
@@ -79,8 +79,8 @@ class Video
 
   def check_file
     return [false, "Give a file name, not nil"] if self.file.nil?
-    return [false, "Give a file name, not clear string"] if self.file.to_s.empty?
-    return [false, "#{self.file} is not exist"] unless File.exist? self.file
+    return [false, "Give a file name, not a blank string"] if self.file.to_s.empty?
+    return [false, "#{self.file} does not exist"] unless File.exist? self.file
     return [false, "#{self.file} is a directory"] if File.directory? self.file
     movie = FFMPEG::Movie.new(self.file)
     return [false, "#{self.file} is not a media file"] unless movie.valid?
