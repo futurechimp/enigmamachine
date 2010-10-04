@@ -214,11 +214,10 @@ system).
 
 == Status
 
-This thing is still pre-release, but it is usable in a basic form now.
-
-I'm still working on getting the gem dependencies correct, so you may need to
-manually install a few things to get it to work.  You'll also need a working
-copy of ffmpeg available on your path.
+Enigmamachine should be considered beta quality code.  At the same time,
+crashes and bugs have been infrequent for us, and it's a simple system which
+is working well.  Please let us know of any bugs by filing an issue on the
+GitHub tracker.
 
 
 == Note on Patches/Pull Requests
