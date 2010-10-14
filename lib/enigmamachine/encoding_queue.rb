@@ -13,7 +13,7 @@ class EncodingQueue
   end
 
 
-  # Gets the next unencoded Video from the database and starts encoding it.
+  # Gets the next unencoded Video from the database and starts encoding its file.
   #
   def encode_next_video
     if Video.unencoded.count > 0 && Video.encoding.count < @threads
