@@ -19,39 +19,5 @@ class Encoder
   #
   has n, :encoding_tasks
 
-  # Kicks off an FFMpeg encode on a given video.
-  #
-  def encode(video)
-    ffmpeg(encoding_tasks.first, video)
-  end
-
-  private
-
-  # Shells out to ffmpeg and hits the given video with the parameters in the
-  # given task.  Will call itself recursively until all tasks in this encoder's
-  # encoding_tasks are completed.
-  #
-  def ffmpeg(task, video)
-    current_task_index = encoding_tasks.index(task)
-    movie = FFMPEG::Movie.new(video.file)
-    encoding_operation = proc {
-      video.update(:state => 'encoding')
-      movie.transcode(video.file + task.output_file_suffix, task.command) do |p|
-        puts p*100
-      end
-    }
-    completion_callback = proc {|result|
-      if task == encoding_tasks.last
-        video.update(:state => 'complete')
-        video.notify_complete
-      else
-        next_task_index = current_task_index + 1
-        next_task = encoding_tasks[next_task_index]
-        ffmpeg(next_task, video)
-      end
-    }
-    EventMachine.defer(encoding_operation, completion_callback)
-  end
-
 end
 

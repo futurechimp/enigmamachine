@@ -16,10 +16,10 @@ class EncodingQueue
   # Gets the next unencoded Video from the database and starts encoding it.
   #
   def encode_next_video
-    if Video.unencoded.count > 0 && ::Video.encoding.count < @threads
+    if Video.unencoded.count > 0 && Video.encoding.count < @threads
       video = Video.unencoded.first
       begin
-        video.encoder.encode(video)
+        video.encode!
       rescue Exception => ex
         # don't do anything just yet, until we set up logging properly.
       end

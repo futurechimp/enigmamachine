@@ -6,7 +6,7 @@ class TestVideo <  Test::Unit::TestCase
   context "A Video instance" do
 
     should "be invalid with a bad file path" do
-      resource = ::Video.make
+      resource = Video.make
       resource.file = ""
       assert(!resource.valid?, "must not be empty")
       resource.file = nil
@@ -20,7 +20,7 @@ class TestVideo <  Test::Unit::TestCase
     end
 
     should "be valid without a callback_url" do
-      resource = ::Video.make
+      resource = Video.make
       resource.callback_url = ""
       assert resource.valid?
       resource.callback_url = nil
@@ -28,7 +28,7 @@ class TestVideo <  Test::Unit::TestCase
     end
 
     should "be valid with a callback_url" do
-      resource = ::Video.make
+      resource = Video.make
       resource.callback_url = "blah"
       assert resource.valid?
     end
@@ -50,6 +50,31 @@ class TestVideo <  Test::Unit::TestCase
         v.encoder = e
       end
     end
+
+    context "on a local filesystem" do
+      setup do
+        @video = Video.make
+      end
+
+      should "have an initial state of 'unencoded'" do
+        assert_equal("unencoded", @video.state)
+      end
+
+      should "transition to state 'encoding' on 'encode!' command" do
+        @video.encode!
+        assert_equal("encoding", @video.state)
+      end
+
+      should "transition to state 'unencoded' on 'reset!' command" do
+        @video.encode!
+        @video.reset!
+        assert_equal("unencoded", @video.state)
+      end
+
+    end
+
+#    context "available via http" do
+#    end
 
   end
 
@@ -81,40 +106,40 @@ class TestVideo <  Test::Unit::TestCase
       end
     end
 
-    context "when try to delete any kind of videos from base" do
+    context "when trying to delete any kind of videos from base" do
       setup do
         clear_videos
         5.times { Video.make }
       end
 
-      should "be delete an unencoded videos" do
+      should "delete an unencoded video" do
         count = Video.unencoded.count
         2.times { Video.unencoded.first.destroy }
         assert_equal count - 2, Video.unencoded.count
       end
 
-      should "be delete a completed videos" do
+      should "delete a completed video" do
         3.times { Video.unencoded.first.update(:state => "complete") }
         count = Video.complete.count
         2.times { Video.complete.first.destroy }
         assert_equal count - 2, Video.complete.count
       end
 
-      should "be delete a videos with errors" do
+      should "delete videos with errors" do
         3.times { Video.unencoded.first.update(:state => "error") }
         count = Video.with_errors.count
         2.times { Video.with_errors.first.destroy  }
         assert_equal count - 2, Video.with_errors.count
       end
 
-      should "not be delete an encoding videos" do
+      should "not delete an encoding video" do
         3.times { Video.unencoded.first.update(:state => "encoding") }
         count = Video.encoding.count
         2.times { Video.encoding.first.destroy }
         assert_equal count, Video.encoding.count
       end
 
-      should "be hard delete an encoding videos" do
+      should "allow force destroy of an encoding video" do
         3.times { Video.unencoded.first.update(:state => "encoding") }
         count = Video.encoding.count
         2.times { Video.encoding.first.destroy! }

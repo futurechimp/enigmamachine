@@ -8,6 +8,7 @@ require 'eventmachine'
 require 'rack-flash'
 require 'dm-validations'
 require 'dm-migrations'
+require 'dm-is-state_machine'
 require 'open3'
 require 'logger'
 require 'streamio-ffmpeg'
@@ -38,7 +39,6 @@ class EnigmaMachine < Sinatra::Base
 
   configure :development do
     db = "sqlite3:///#{Dir.pwd}/enigmamachine.sqlite3"
-    DataMapper::Logger.new(STDOUT, :debug)
     DataMapper.setup(:default, db)
   end
 

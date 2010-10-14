@@ -5,7 +5,7 @@ class TestEncoder <  Test::Unit::TestCase
   context "An Encoder instance" do
 
     setup do
-      @encoder = ::Encoder.make
+      @encoder = Encoder.make
     end
 
     should "be invalid without a name" do
@@ -28,18 +28,19 @@ class TestEncoder <  Test::Unit::TestCase
     context "hitting the ffmpeg method" do
       context "for an encoder with 1 task" do
         setup do
-          video = Video.make
+          @video = Video.make
           task = EncodingTask.make
-          video.encoder.encoding_tasks << task
-          video.encoder.save
-          video.encoder.encode(video)
-          @id = video.id
+          @video.encoder.encoding_tasks << task
+          @video.encoder.save
+          @video.encode!
+          @id = @video.id
           sleep 1
         end
 
-        should "mark the video as encoding" do
-          video = Video.get(@id)
-          assert_equal "encoding", video.state
+        should "create the file specified in the encoder's first encoding task" do
+          suffix = @video.encoder.encoding_tasks.first.output_file_suffix
+          file = @video.file + suffix
+          assert File.exist? file
         end
 
         should_eventually "mark the video as complete" do
@@ -56,14 +57,8 @@ class TestEncoder <  Test::Unit::TestCase
           task = EncodingTask.make
           2.times { video.encoder.encoding_tasks << EncodingTask.make }
           video.encoder.save
-          video.encoder.encode(video)
+          video.encode!
           @id = video.id
-        end
-
-        should "mark the video as encoding" do
-          sleep 1
-          video = Video.get(@id)
-          assert_equal "encoding", video.state
         end
 
         should_eventually "mark the video as complete" do
@@ -71,7 +66,6 @@ class TestEncoder <  Test::Unit::TestCase
           video = Video.get(@id)
           assert_equal "complete", video.state
         end
-
       end
 
     end

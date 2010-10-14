@@ -13,6 +13,7 @@ begin
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_dependency "data_mapper", ">=1.0.2"
     gem.add_dependency "dm-sqlite-adapter", ">=1.0.2"
+    gem.add_dependency "dm-is-state_machine", ">=1.0.2"
     gem.add_dependency "eventmachine", ">=0.12.10"
     gem.add_dependency "rack-flash"
     gem.add_dependency "ruby-debug"
