@@ -117,6 +117,9 @@ class Video
     throw :halt
   end
 
+  # Would stop the encoder process if it was implemented.  Currently does nothing
+  # and returns false.
+  #
   def stop_encode
     return false
     #TODO Kill the encoder process
