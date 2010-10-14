@@ -6,36 +6,36 @@ class TestVideo <  Test::Unit::TestCase
   context "A Video instance" do
 
     should "be invalid with a bad file path" do
-      resource = Video.make
-      resource.file = ""
-      assert(!resource.valid?, "must not be empty")
-      resource.file = nil
-      assert(!resource.valid?, "must not be nil")
-      resource.file = "/fdfdf/sfdsdfsd/fse.gfr"
-      assert(!resource.valid?, "must be exist")
-      resource.file = File.dirname(__FILE__)
-      assert(!resource.valid?, "must not be a directory")
-      resource.file = __FILE__
-      assert(!resource.valid?, "must be media file")
+      video = Video.make
+      video.file = ""
+      assert(!video.valid?, "must not be empty")
+      video.file = nil
+      assert(!video.valid?, "must not be nil")
+      video.file = "/fdfdf/sfdsdfsd/fse.gfr"
+      assert(!video.valid?, "must be exist")
+      video.file = File.dirname(__FILE__)
+      assert(!video.valid?, "must not be a directory")
+      video.file = __FILE__
+      assert(!video.valid?, "must be media file")
     end
 
     should "be valid without a callback_url" do
-      resource = Video.make
-      resource.callback_url = ""
-      assert resource.valid?
-      resource.callback_url = nil
-      assert resource.valid?
+      video = Video.make
+      video.callback_url = ""
+      assert video.valid?
+      video.callback_url = nil
+      assert video.valid?
     end
 
     should "be valid with a callback_url" do
-      resource = Video.make
-      resource.callback_url = "blah"
-      assert resource.valid?
+      video = Video.make
+      video.callback_url = "blah"
+      assert video.valid?
     end
 
     should "be valid with a correct file path" do
-      resource = ::Video.make
-      assert resource.valid?
+      video = ::Video.make
+      assert video.valid?
     end
 
     should "belong to an Encoder" do
