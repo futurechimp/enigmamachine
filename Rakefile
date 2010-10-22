@@ -20,6 +20,7 @@ begin
     gem.add_dependency "sinatra", ">=1.0.0"
     gem.add_dependency "streamio-ffmpeg", ">=0.7.3"
     gem.add_dependency "thin"
+    gem.add_development_dependency "rack-test"
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
