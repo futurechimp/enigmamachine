@@ -92,6 +92,12 @@ class TestVideo <  Test::Unit::TestCase
         @video.download_complete!
         assert_equal("unencoded", @video.state)
       end
+
+      should "transition to state 'download_error' on 'download_error!' command" do
+        @video.download!
+        @video.download_error!
+        assert_equal("download_error", @video.state)
+      end
     end
 
   end

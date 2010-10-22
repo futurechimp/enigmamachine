@@ -18,11 +18,21 @@ class Video
 
   # State machine transitions
   #
-  is :state_machine, :initial => :unencoded, :column => :state do
+  is :state_machine, :column => :state do
+
+    # States for HTTP-hosted videos
+    state :waiting_for_download
+    state :downloading, :enter => :do_download
+
+    # States for videos on the local filesystem
     state :unencoded
     state :encoding, :enter => :do_encode
     state :error
     state :complete, :enter => :notify_complete
+
+    event :download do
+      transition :from => :waiting_for_download, :to => :downloading
+    end
 
     event :encode do
       transition :from => :unencoded,  :to => :encoding
@@ -161,6 +171,12 @@ class Video
       Net::HTTP.get(URI.parse(video.callback_url)) unless callback_url.nil?
     rescue
     end
+  end
+
+  # Downloads a video from a remote location via HTTP
+  #
+  def do_download
+    # TODO: download code goes here
   end
 
 end
