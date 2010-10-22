@@ -73,8 +73,26 @@ class TestVideo <  Test::Unit::TestCase
 
     end
 
-#    context "available via http" do
-#    end
+    context "available via http" do
+      setup do
+        @video = Video.make(:location => "http://foo.org/vids/var.mov")
+      end
+
+      should "have an initial state of 'waiting_for_download'" do
+        assert_equal("waiting_for_download", @video.state)
+      end
+
+      should "transition to state 'downloading' on 'download!' command" do
+        @video.download!
+        assert_equal("downloading", @video.state)
+      end
+
+      should "transition to state 'unencoded' on 'download_complete!' command" do
+        @video.download!
+        @video.download_complete!
+        assert_equal("unencoded", @video.state)
+      end
+    end
 
   end
 
