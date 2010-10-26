@@ -76,27 +76,50 @@ class TestVideo <  Test::Unit::TestCase
     context "available via http" do
       setup do
         @video = Video.make(:http)
+        EventMachine::MockHttpRequest.use {
+          EventMachine::HttpRequest.register_file("http://foo.org/bar/blah.wmv", :get, File.dirname(__FILE__) + '/support/afile.mpg')
+        }
       end
 
       should "have an initial state of 'waiting_for_download'" do
         assert_equal("waiting_for_download", @video.state)
       end
 
-      should "transition to state 'downloading' on 'download!' command" do
-        @video.download!
-        assert_equal("downloading", @video.state)
+      context "for the download! event" do
+        setup do
+          @video.download!
+        end
+
+        should "transition to state 'downloading'" do
+          assert_equal("downloading", @video.state)
+        end
+
+#        should "hit the download URL once" do
+#          assert_equal(1, EventMachine::HttpRequest.count('http://foo.org/bar/blah.wmv', :get))
+#        end
+
       end
 
-      should "transition to state 'unencoded' on 'download_complete!' command" do
-        @video.download!
-        @video.download_complete!
-        assert_equal("unencoded", @video.state)
+      context "for the download_complete! event" do
+        setup do
+          @video.download!
+          @video.download_complete!
+        end
+
+        should "transition to state 'unencoded'" do
+          assert_equal("unencoded", @video.state)
+        end
       end
 
-      should "transition to state 'download_error' on 'download_error!' command" do
-        @video.download!
-        @video.download_error!
-        assert_equal("download_error", @video.state)
+      context "for the download_error! event" do
+        setup do
+          @video.download!
+          @video.download_error!
+        end
+
+        should "transition to state 'download_error'" do
+          assert_equal("download_error", @video.state)
+        end
       end
     end
 

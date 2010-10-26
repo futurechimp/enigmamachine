@@ -25,7 +25,6 @@ class Video
     state :downloading, :enter => :do_download
     state :download_error
 
-
     # States for videos on the local filesystem
     state :unencoded
     state :encoding, :enter => :do_encode
@@ -199,7 +198,13 @@ class Video
   # Downloads a video from a remote location via HTTP
   #
   def do_download
-    # TODO: download code goes here
+#    http = EventMachine::HttpRequest.new(file).get :timeout => 10
+#    http.callback {
+#      download_complete!
+#    }
+#    http.errback {
+#      download_error!
+#    }
   end
 
   # Returns false if the video is available via http

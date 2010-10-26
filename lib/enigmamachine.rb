@@ -12,6 +12,7 @@ require 'dm-is-state_machine'
 require 'open3'
 require 'logger'
 require 'streamio-ffmpeg'
+require 'em-http-request'
 
 # Extensions to Sinatra
 #

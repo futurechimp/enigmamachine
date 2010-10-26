@@ -29,7 +29,7 @@ Video.blueprint do
 end
 
 Video.blueprint(:http) do
-  file { "http://foo.org/bar/blah.mov"}
+  file { http_file_location }
 end
 
 Video.blueprint(:with_callback) do

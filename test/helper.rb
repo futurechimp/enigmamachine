@@ -42,3 +42,7 @@ def encode_credentials(username, password)
   "Basic " + Base64.encode64("#{username}:#{password}")
 end
 
+def http_file_location
+  "http://foo.org/bar/blah.mov"
+end
+
