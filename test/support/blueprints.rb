@@ -28,6 +28,10 @@ Video.blueprint do
   updated_at DateTime.now
 end
 
+Video.blueprint(:http) do
+  file { "http://foo.org/bar/blah.mov"}
+end
+
 Video.blueprint(:with_callback) do
   callback_url { "http://example.com/call/back/id" }
 end

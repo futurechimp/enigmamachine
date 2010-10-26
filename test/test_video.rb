@@ -75,7 +75,7 @@ class TestVideo <  Test::Unit::TestCase
 
     context "available via http" do
       setup do
-        @video = Video.make(:location => "http://foo.org/vids/var.mov")
+        @video = Video.make(:http)
       end
 
       should "have an initial state of 'waiting_for_download'" do

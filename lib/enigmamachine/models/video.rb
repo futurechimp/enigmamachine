@@ -23,6 +23,8 @@ class Video
     # States for HTTP-hosted videos
     state :waiting_for_download
     state :downloading, :enter => :do_download
+    state :download_error
+
 
     # States for videos on the local filesystem
     state :unencoded
@@ -32,6 +34,14 @@ class Video
 
     event :download do
       transition :from => :waiting_for_download, :to => :downloading
+    end
+
+    event :download_complete do
+      transition :from => :downloading, :to => :unencoded
+    end
+
+    event :download_error do
+      transition :from => :downloading, :to => :download_error
     end
 
     event :encode do
@@ -50,9 +60,9 @@ class Video
 
   # Validations
   #
-  validates_with_method :file, :method => :check_file
   validates_uniqueness_of :file, :scope => :encoder_id,
     :message => "Same file with same encoder already exists"
+  validates_with_method :file, :method => :check_file
 
   # Associations
   #
@@ -61,6 +71,7 @@ class Video
   # Filters
   #
   before :destroy, :check_destroy
+  before :create, :set_initial_state
 
   default_scope(:default).update(:order => [:created_at.asc])
 
@@ -109,13 +120,23 @@ class Video
   # and that it can be encoded by ffmpeg.
   #
   def check_file
-    return [false, "Give a file name, not nil"] if self.file.nil?
-    return [false, "Give a file name, not a blank string"] if self.file.to_s.empty?
-    return [false, "#{self.file} does not exist"] unless File.exist? self.file
-    return [false, "#{self.file} is a directory"] if File.directory? self.file
-    movie = FFMPEG::Movie.new(self.file)
-    return [false, "#{self.file} is not a media file"] unless movie.valid?
+    if local?
+      return [false, "Give a file name, not nil"] if self.file.nil?
+      return [false, "Give a file name, not a blank string"] if self.file.to_s.empty?
+      return [false, "#{self.file} does not exist"] unless File.exist? self.file
+      return [false, "#{self.file} is a directory"] if File.directory? self.file
+      movie = FFMPEG::Movie.new(self.file)
+      return [false, "#{self.file} is not a media file"] unless movie.valid?
+    end
     return true
+  end
+
+  def set_initial_state
+    if local?
+      self.state = "unencoded"
+    else
+      self.state = "waiting_for_download"
+    end
   end
 
   # Checks whether a video object can be destroyed - videos cannot be destroyed
@@ -177,6 +198,11 @@ class Video
   #
   def do_download
     # TODO: download code goes here
+  end
+
+  def local?
+    return false if self.file =~ /^http:\/\//
+    return true
   end
 
 end
