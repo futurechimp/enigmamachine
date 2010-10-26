@@ -131,6 +131,8 @@ class Video
     return true
   end
 
+  # Returns true unless the video's file starts with 'http://'
+  #
   def set_initial_state
     if local?
       self.state = "unencoded"
@@ -200,6 +202,8 @@ class Video
     # TODO: download code goes here
   end
 
+  # Returns false if the video is available via http
+  #
   def local?
     return false if self.file =~ /^http:\/\//
     return true
