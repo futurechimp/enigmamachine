@@ -100,10 +100,14 @@ class Video
     all(:state => 'complete', :order => [:updated_at.desc])
   end
 
+  # Named scope returning all videos which are not yet downloaded.
+  #
   def self.waiting_for_download
     all(:state => 'waiting_for_download')
   end
 
+  # Named scope returning all videos which currently downloading.
+  #
   def self.downloading
     all(:state => 'downloading')
   end
@@ -215,8 +219,9 @@ class Video
   # are called. It's a chicken-and-egg situation. So I'm hitting it with the
   # big hammer and setting state manually.
   #
-  # This is a disgusting abuse of the state machine, but it sort of works.
-  # By the time this method is complete, tests will assume our state is
+  # This is a disgusting abuse of the state machine, but it works.
+  #
+  # NOTE: By the time this method is complete, tests will assume our state is
   # "unencoded" (as a result of the download_complete! event) rather than
   # "downloading", as it should be.
   #
@@ -224,17 +229,20 @@ class Video
     self.state = "downloading"
     self.save!
     http = EventMachine::HttpRequest.new(file).get :timeout => 10
-    http.stream { |data|
-      outfile = File.join(Dir.pwd, "downloads", self.id.to_s, File.basename(URI.parse(file).path))
+
+    http.stream do |data|
+      filename = File.basename(URI.parse(file).path)
+      outfile = File.join(Dir.pwd, "downloads", self.id.to_s, filename)
       File.open(outfile, 'a') {|f| f.write(data) }
-    }
-    http.callback {
-      puts "download complete, calling event..."
+    end
+
+    http.callback do
       download_complete!
-    }
-    http.errback {
+    end
+
+    http.errback do
       download_error!
-    }
+    end
   end
 
   # Returns false if the video is available via http
