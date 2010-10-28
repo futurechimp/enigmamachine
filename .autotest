@@ -1,0 +1,4 @@
+Autotest.add_hook :initialize do |at|
+ %w{ .sqlite3 }.each {|exception| at.add_exception(exception)}
+end
+
