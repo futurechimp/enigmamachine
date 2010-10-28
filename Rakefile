@@ -10,7 +10,8 @@ begin
     gem.email = "dave@caprica"
     gem.homepage = "http://github.com/futurechimp/enigmamachine"
     gem.authors = ["Dave Hrycyszyn", "Dmitry Brazhkin"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.add_development_dependency "thoughtbot-shoulda"
+    gem.add_development_dependency "rack-test"
     gem.add_dependency "data_mapper", ">=1.0.2"
     gem.add_dependency "dm-sqlite-adapter", ">=1.0.2"
     gem.add_dependency "dm-is-state_machine", ">=1.0.2"
@@ -21,7 +22,6 @@ begin
     gem.add_dependency "streamio-ffmpeg", ">=0.7.3"
     gem.add_dependency "thin"
     gem.add_dependency "em-http-request"
-    gem.add_development_dependency "rack-test"
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
