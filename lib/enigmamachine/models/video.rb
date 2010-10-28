@@ -125,10 +125,6 @@ class Video
     end
   end
 
-  def to_s
-    "Hi, I'm video #{self.id}"
-  end
-
   private
 
   # Validation checks for files - we want to ensure that the video file exists,
