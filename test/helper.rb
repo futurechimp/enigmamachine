@@ -43,6 +43,6 @@ def encode_credentials(username, password)
 end
 
 def http_file_location
-  "http://foo.org/bar/blah.mov"
+  "http://foo.org/bar/blah.wmv"
 end
 

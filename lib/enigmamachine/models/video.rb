@@ -100,6 +100,14 @@ class Video
     all(:state => 'complete', :order => [:updated_at.desc])
   end
 
+  def self.waiting_for_download
+    all(:state => 'waiting_for_download')
+  end
+
+  def self.downloading
+    all(:state => 'downloading')
+  end
+
   # Resets all videos currently marked as "encoding" to state "unencoded"
   # which is the initial state.
   #
@@ -111,6 +119,10 @@ class Video
     Video.encoding.each do |video|
       video.reset!
     end
+  end
+
+  def to_s
+    "Hi, I'm video #{self.id}"
   end
 
   private
@@ -197,14 +209,32 @@ class Video
 
   # Downloads a video from a remote location via HTTP
   #
+  # HACK: it's not possible call a DM state machine event from a method
+  # which is itself tied to a DM state machine transition (like this one is),
+  # because dm-is_state_machine doesn't update the state before triggered methods
+  # are called. It's a chicken-and-egg situation. So I'm hitting it with the
+  # big hammer and setting state manually.
+  #
+  # This is a disgusting abuse of the state machine, but it sort of works.
+  # By the time this method is complete, tests will assume our state is
+  # "unencoded" (as a result of the download_complete! event) rather than
+  # "downloading", as it should be.
+  #
   def do_download
-#    http = EventMachine::HttpRequest.new(file).get :timeout => 10
-#    http.callback {
-#      download_complete!
-#    }
-#    http.errback {
-#      download_error!
-#    }
+    self.state = "downloading"
+    self.save!
+    http = EventMachine::HttpRequest.new(file).get :timeout => 10
+    http.stream { |data|
+      outfile = File.join(Dir.pwd, "downloads", self.id.to_s, File.basename(URI.parse(file).path))
+      File.open(outfile, 'a') {|f| f.write(data) }
+    }
+    http.callback {
+      puts "download complete, calling event..."
+      download_complete!
+    }
+    http.errback {
+      download_error!
+    }
   end
 
   # Returns false if the video is available via http

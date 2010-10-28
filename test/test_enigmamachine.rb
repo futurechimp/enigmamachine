@@ -18,7 +18,7 @@ class TestEnigmamachine < Test::Unit::TestCase
       get '/', {}, basic_auth_creds
     end
 
-    should "respond" do
+    should "work" do
       assert last_response.ok?
     end
 

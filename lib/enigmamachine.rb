@@ -26,6 +26,7 @@ require File.dirname(__FILE__) + '/enigmamachine/models/encoder'
 require File.dirname(__FILE__) + '/enigmamachine/models/encoding_task'
 require File.dirname(__FILE__) + '/enigmamachine/models/video'
 require File.dirname(__FILE__) + '/enigmamachine/encoding_queue'
+require File.dirname(__FILE__) + '/enigmamachine/download_queue'
 
 
 
@@ -99,7 +100,8 @@ class EnigmaMachine < Sinatra::Base
       until EM.reactor_running?
         sleep 1
       end
-      queue = EncodingQueue.new
+      encode_queue = EncodingQueue.new
+      download_queue = DownloadQueue.new
     end
   end
 
