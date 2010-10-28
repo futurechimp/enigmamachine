@@ -93,13 +93,17 @@ class TestVideo <  Test::Unit::TestCase
           end
         end
 
-        should "transition to state 'downloading'" do
-          assert_equal("unencoded", @video.state) # => This is FUCKED! It should be "downloading" at this point but our async test returns too fast.
+        should_eventually "transition to state 'downloading'" do
+          # This is WRONG! It should be "downloading" at this point
+          # but our async test returns too fast.
+          assert_equal("unencoded", @video.state)
         end
 
-#        should "hit the download URL once" do
-#          assert_equal(1, EventMachine::HttpRequest.count('http://foo.org/bar/blah.wmv', :get))
-#        end
+        should_eventually "hit the download URL once" do
+          EventMachine::MockHttpRequest.activate!
+          assert_equal(1, EventMachine::HttpRequest.count(http_file_location, :get))
+          EventMachine::MockHttpRequest.deactivate!
+        end
 
       end
     end
@@ -185,6 +189,14 @@ class TestVideo <  Test::Unit::TestCase
 
     should "be able to grab all videos that are encoding" do
       assert Video.respond_to? "encoding"
+    end
+
+    should "be able to grab all videos that are not yet downloaded" do
+      assert Video.respond_to? "waiting_for_download"
+    end
+
+    should "be able to grab all videos that are downloading" do
+      assert Video.respond_to? "downloading"
     end
 
   end
