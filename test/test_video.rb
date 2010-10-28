@@ -12,7 +12,7 @@ class TestVideo <  Test::Unit::TestCase
       video.file = nil
       assert(!video.valid?, "must not be nil")
       video.file = "/fdfdf/sfdsdfsd/fse.gfr"
-      assert(!video.valid?, "must be exist")
+      assert(!video.valid?, "must exist")
       video.file = File.dirname(__FILE__)
       assert(!video.valid?, "must not be a directory")
       video.file = __FILE__
