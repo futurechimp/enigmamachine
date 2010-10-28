@@ -55,6 +55,10 @@ class Video
       transition :from => :encoding, :to => :unencoded
     end
 
+    event :reset_download do
+      transition :from => :downloading, :to => :waiting_for_download
+    end
+
   end
 
   # Validations
@@ -125,6 +129,13 @@ class Video
     end
   end
 
+  def self.reset_downloading_videos
+    Video.downloading.each do |video|
+      puts "resetting video #{video.id}"
+      video.reset_download!
+    end
+  end
+
   private
 
   # Validation checks for files - we want to ensure that the video file exists,
@@ -181,9 +192,9 @@ class Video
   #
   def ffmpeg(task)
     current_task_index = encoder.encoding_tasks.index(task)
-    movie = FFMPEG::Movie.new(file)
+    movie = FFMPEG::Movie.new(file_to_encode)
     encoding_operation = proc {
-      movie.transcode(file + task.output_file_suffix, task.command)
+      movie.transcode(file_to_encode + task.output_file_suffix, task.command)
     }
     completion_callback = proc {|result|
       if task == encoder.encoding_tasks.last
@@ -224,20 +235,24 @@ class Video
   def do_download
     self.state = "downloading"
     self.save!
+
+    FileUtils.rm(file_to_encode, :force => true)
+    puts "creating #{File.dirname(file_to_encode)}"
+    FileUtils.mkdir_p(File.dirname(file_to_encode))
     http = EventMachine::HttpRequest.new(file).get :timeout => 10
 
     http.stream do |data|
-      filename = File.basename(URI.parse(file).path)
-      outfile = File.join(Dir.pwd, "downloads", self.id.to_s, filename)
-      File.open(outfile, 'a') {|f| f.write(data) }
+      File.open(file_to_encode, 'a') {|f| f.write(data) }
     end
 
     http.callback do
-      download_complete!
+      self.state = "unencoded"
+      self.save!
     end
 
     http.errback do
-      download_error!
+      self.state = "download_error"
+      self.save!
     end
   end
 
@@ -246,6 +261,18 @@ class Video
   def local?
     return false if self.file =~ /^http:\/\//
     return true
+  end
+
+  # If the file is local, this just returns its location. If it's not local,
+  # it builds a path to the file based on a standard location and returns that.
+  #
+  def file_to_encode
+    if local?
+      return file
+    else
+      filename = File.basename(URI.parse(file).path)
+      return File.join(Dir.pwd, "downloads", self.id.to_s, filename)
+    end
   end
 
 end

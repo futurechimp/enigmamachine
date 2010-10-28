@@ -95,6 +95,8 @@ class EnigmaMachine < Sinatra::Base
   # main Sinatra/thin thread once the periodic timer is added.
   #
   configure do
+    puts "resetting downloading videos"
+    Video.reset_downloading_videos
     Video.reset_encoding_videos
     Thread.new do
       until EM.reactor_running?
