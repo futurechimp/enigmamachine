@@ -62,9 +62,12 @@ class EnigmaMachine < Sinatra::Base
     unless File.exist? File.join(Dir.getwd, 'config.yml')
       FileUtils.cp(File.dirname(__FILE__) +  '/generators/config.yml', Dir.getwd)
     end
-    raw_config = File.read(Dir.getwd + "/config.yml")
-    @@username = YAML.load(raw_config)['username']
-    @@password = YAML.load(raw_config)['password']
+    config = YAML.load(File.read(Dir.getwd + "/config.yml"))
+    @@username = config['username']
+    @@password = config['password']
+    @@threads = config['threads']
+    @@enable_http_downloads = config['enable_http_downloads']
+    @@download_storage_path = config['download_storage_path']
   end
 
   # Set the views to the proper path inside the gem
@@ -114,6 +117,10 @@ class EnigmaMachine < Sinatra::Base
   use Rack::Auth::Basic do |username, password|
     [username, password] == [@@username, @@password]
   end
+
+  # Some accessors for config variables
+  #
+  cattr_accessor :download_storage_path, :enable_http_downloads, :threads
 
 
   # Shows the enigma status page.

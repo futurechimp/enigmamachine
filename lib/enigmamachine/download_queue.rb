@@ -4,9 +4,11 @@ class DownloadQueue
   # starts looking for videos to download.
   #
   def initialize
-    EM.add_periodic_timer(5) {
-      download_next_video
-    }
+    if EnigmaMachine.enable_http_downloads
+      EM.add_periodic_timer(5) do
+        download_next_video
+      end
+    end
   end
 
 

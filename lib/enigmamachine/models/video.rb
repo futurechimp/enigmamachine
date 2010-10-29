@@ -194,10 +194,11 @@ class Video
   def ffmpeg(task)
     current_task_index = encoder.encoding_tasks.index(task)
     movie = FFMPEG::Movie.new(file_to_encode)
-    encoding_operation = proc {
+    encoding_operation = proc do
       movie.transcode(file_to_encode + task.output_file_suffix, task.command)
-    }
-    completion_callback = proc {|result|
+    end
+
+    completion_callback = proc do |result|
       if task == encoder.encoding_tasks.last
         self.complete!
       else
@@ -205,7 +206,8 @@ class Video
         next_task = encoder.encoding_tasks[next_task_index]
         ffmpeg(next_task)
       end
-    }
+    end
+
     EventMachine.defer(encoding_operation, completion_callback)
   end
 
@@ -247,14 +249,15 @@ class Video
   end
 
   # If the file is local, this just returns its location. If it's not local,
-  # it builds a path to the file based on a standard location and returns that.
+  # it builds a path to the file based on your config.yml + the video's id and
+  # returns that.
   #
   def file_to_encode
     if local?
       return file
     else
       filename = File.basename(URI.parse(file).path)
-      return File.join(Dir.pwd, "downloads", self.id.to_s, filename)
+      return File.join(EnigmaMachine.download_storage_path, self.id.to_s, filename)
     end
   end
 

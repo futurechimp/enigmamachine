@@ -16,7 +16,7 @@ class EncodingQueue
   # Gets the next unencoded Video from the database and starts encoding its file.
   #
   def encode_next_video
-    if Video.unencoded.count > 0 && Video.encoding.count < @threads
+    if Video.unencoded.count > 0 && Video.encoding.count < EnigmaMachine.threads
       video = Video.unencoded.first
       begin
         video.encode!
