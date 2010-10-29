@@ -215,10 +215,7 @@ class Video
   # a GET request to the video's callback_url.
   #
   def notify_complete
-    begin
-      Net::HTTP.get(URI.parse(video.callback_url)) unless callback_url.nil?
-    rescue
-    end
+    EventMachine::HttpRequest.new(callback_url).get :timeout => 10 unless callback_url.nil?
   end
 
   # Downloads a video from a remote location via HTTP
@@ -229,6 +226,7 @@ class Video
     http = EventMachine::HttpRequest.new(file).get :timeout => 10
 
     http.stream do |data|
+      puts "what is status?: " + http.response_header.status.to_s
       File.open(file_to_encode, 'a') {|f| f.write(data) }
     end
 
