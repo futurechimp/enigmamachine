@@ -6,7 +6,6 @@ class EncodingQueue
   # starts looking for unencoded videos.
   #
   def initialize
-    @threads = YAML.load_file(Dir.getwd + '/config.yml')['threads'] if @threads.nil?
     EM.add_periodic_timer(5) {
       encode_next_video
     }
