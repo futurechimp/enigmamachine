@@ -86,7 +86,7 @@ class TestVideo <  Test::Unit::TestCase
         setup do
           EventMachine.run do
             EventMachine::MockHttpRequest.use {
-              EventMachine::HttpRequest.register_file(http_file_location, :get, {'Authorization' => 'Basic admin:admin'}, '/home/dave/workspace/enigmamachine/test/support/afile.mpg')
+              EventMachine::HttpRequest.register_file(http_file_location, :get, '/home/dave/workspace/enigmamachine/test/support/afile.mpg')
             }
             @video.download!
             EventMachine.stop
