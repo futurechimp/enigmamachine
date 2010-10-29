@@ -76,9 +76,6 @@ class TestVideo <  Test::Unit::TestCase
     context "available via http" do
       setup do
         @video = Video.make(:http)
-        EventMachine::MockHttpRequest.use {
-          EventMachine::HttpRequest.register_file(http_file_location, :get, File.dirname(__FILE__) + '/support/afile.mpg')
-        }
       end
 
       should "have an initial state of 'waiting_for_download'" do
@@ -88,15 +85,16 @@ class TestVideo <  Test::Unit::TestCase
       context "for the download! event" do
         setup do
           EventMachine.run do
+            EventMachine::MockHttpRequest.use {
+              EventMachine::HttpRequest.register_file(http_file_location, :get, {'Authorization' => 'Basic admin:admin'}, '/home/dave/workspace/enigmamachine/test/support/afile.mpg')
+            }
             @video.download!
             EventMachine.stop
           end
         end
 
         should_eventually "transition to state 'downloading'" do
-          # This is WRONG! It should be "downloading" at this point
-          # but our async test returns too fast.
-          assert_equal("unencoded", @video.state)
+          assert_equal("downloading", @video.state)
         end
 
         should_eventually "hit the download URL once" do
@@ -137,7 +135,7 @@ class TestVideo <  Test::Unit::TestCase
       end
     end
 
-    context "when trying to delete any kind of videos from base" do
+    context "deleting videos" do
       setup do
         clear_videos
         5.times { Video.make }
@@ -157,10 +155,10 @@ class TestVideo <  Test::Unit::TestCase
       end
 
       should "delete videos with errors" do
-        3.times { Video.unencoded.first.update(:state => "error") }
-        count = Video.with_errors.count
-        2.times { Video.with_errors.first.destroy  }
-        assert_equal count - 2, Video.with_errors.count
+        3.times { Video.unencoded.first.update(:state => "encode_error") }
+        count = Video.with_encode_errors.count
+        2.times { Video.with_encode_errors.first.destroy  }
+        assert_equal count - 2, Video.with_encode_errors.count
       end
 
       should "not delete an encoding video" do
@@ -184,7 +182,7 @@ class TestVideo <  Test::Unit::TestCase
     end
 
     should "be able to grab all videos with errors" do
-      assert Video.respond_to? "with_errors"
+      assert Video.respond_to? "with_encode_errors"
     end
 
     should "be able to grab all videos that are encoding" do

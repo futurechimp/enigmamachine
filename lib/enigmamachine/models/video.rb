@@ -15,48 +15,49 @@ class Video
   property :updated_at, DateTime
   property :encoder_id, Integer, :required => true
   property :callback_url, String
+  property :state, String
 
   # State machine transitions
   #
-  is :state_machine, :column => :state do
+  state_machine do
 
-    # States for HTTP-hosted videos
-    state :waiting_for_download
-    state :downloading, :enter => :do_download
-    state :download_error
+    # State transitions for HTTP-hosted videos
+    after_transition :on => :download, :do => :do_download
 
     # States for videos on the local filesystem
-    state :unencoded
-    state :encoding, :enter => :do_encode
-    state :error
-    state :complete, :enter => :notify_complete
+    after_transition :on => :encode, :do => :do_encode
+    after_transition :on => :complete, :do => :notify_complete
 
     event :download do
-      transition :from => :waiting_for_download, :to => :downloading
+      transition :waiting_for_download => :downloading
     end
 
     event :download_complete do
-      transition :from => :downloading, :to => :unencoded
+      transition :downloading => :unencoded
     end
 
     event :download_error do
-      transition :from => :downloading, :to => :download_error
-    end
-
-    event :encode do
-      transition :from => :unencoded,  :to => :encoding
-    end
-
-    event :complete do
-      transition :from => :encoding, :to => :complete
-    end
-
-    event :reset do
-      transition :from => :encoding, :to => :unencoded
+      transition :downloading =>  :download_error
     end
 
     event :reset_download do
-      transition :from => :downloading, :to => :waiting_for_download
+      transition :downloading => :waiting_for_download
+    end
+
+    event :encode do
+      transition :unencoded => :encoding
+    end
+
+    event :complete do
+      transition :encoding => :complete
+    end
+
+    event :reset do
+      transition :encoding => :unencoded
+    end
+
+    event :encode_error do
+      transition :encoding => :encode_error
     end
 
   end
@@ -94,8 +95,8 @@ class Video
 
   # Named scope giving back all videos with encoding errors.
   #
-  def self.with_errors
-    all(:state => 'error')
+  def self.with_encode_errors
+    all(:state => 'encode_error')
   end
 
   # Named scope giving back all videos which have completed encoding.
@@ -220,24 +221,8 @@ class Video
 
   # Downloads a video from a remote location via HTTP
   #
-  # HACK: it's not possible call a DM state machine event from a method
-  # which is itself tied to a DM state machine transition (like this one is),
-  # because dm-is_state_machine doesn't update the state before triggered methods
-  # are called. It's a chicken-and-egg situation. So I'm hitting it with the
-  # big hammer and setting state manually.
-  #
-  # This is a disgusting abuse of the state machine, but it works.
-  #
-  # NOTE: By the time this method is complete, tests will assume our state is
-  # "unencoded" (as a result of the download_complete! event) rather than
-  # "downloading", as it should be.
-  #
   def do_download
-    self.state = "downloading"
-    self.save!
-
     FileUtils.rm(file_to_encode, :force => true)
-    puts "creating #{File.dirname(file_to_encode)}"
     FileUtils.mkdir_p(File.dirname(file_to_encode))
     http = EventMachine::HttpRequest.new(file).get :timeout => 10
 
@@ -246,13 +231,11 @@ class Video
     end
 
     http.callback do
-      self.state = "unencoded"
-      self.save!
+      download_complete!
     end
 
     http.errback do
-      self.state = "download_error"
-      self.save!
+      download_error!
     end
   end
 

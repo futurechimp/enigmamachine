@@ -8,7 +8,7 @@ require 'eventmachine'
 require 'rack-flash'
 require 'dm-validations'
 require 'dm-migrations'
-require 'dm-is-state_machine'
+require 'state_machine'
 require 'open3'
 require 'logger'
 require 'streamio-ffmpeg'
@@ -247,7 +247,7 @@ class EnigmaMachine < Sinatra::Base
   get '/videos' do
     @completed_videos = Video.complete
     @encoding_videos = Video.encoding
-    @videos_with_errors = Video.with_errors
+    @videos_with_errors = Video.with_encode_errors
     @unencoded_videos = Video.unencoded
     erb :'videos/index'
   end
