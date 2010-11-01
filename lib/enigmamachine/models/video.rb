@@ -132,7 +132,6 @@ class Video
 
   def self.reset_downloading_videos
     Video.downloading.each do |video|
-      puts "resetting video #{video.id}"
       video.reset_download!
     end
   end
@@ -226,7 +225,6 @@ class Video
     http = EventMachine::HttpRequest.new(file).get :timeout => 10
 
     http.stream do |data|
-      puts "what is status?: " + http.response_header.status.to_s
       File.open(file_to_encode, 'a') {|f| f.write(data) }
     end
 

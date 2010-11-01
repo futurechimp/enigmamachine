@@ -19,7 +19,6 @@ class DownloadQueue
     if Video.waiting_for_download.count > 0 && Video.downloading.count == 0
       video = Video.waiting_for_download.first
       begin
-        puts "downloading video #{video.id}"
         video.download!
       rescue Exception => ex
         # don't do anything just yet, until we set up logging properly.
