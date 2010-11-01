@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{enigmamachine}
-  s.version = "0.6.0"
+  s.version = "0.6.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Hrycyszyn", "Dmitry Brazhkin"]
@@ -94,7 +94,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
+      s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<rack-test>, [">= 0"])
       s.add_runtime_dependency(%q<data_mapper>, [">= 1.0.2"])
       s.add_runtime_dependency(%q<dm-sqlite-adapter>, [">= 1.0.2"])
@@ -107,7 +107,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<thin>, [">= 0"])
       s.add_runtime_dependency(%q<em-http-request>, [">= 0"])
     else
-      s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
+      s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<rack-test>, [">= 0"])
       s.add_dependency(%q<data_mapper>, [">= 1.0.2"])
       s.add_dependency(%q<dm-sqlite-adapter>, [">= 1.0.2"])
@@ -121,7 +121,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<em-http-request>, [">= 0"])
     end
   else
-    s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
+    s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<rack-test>, [">= 0"])
     s.add_dependency(%q<data_mapper>, [">= 1.0.2"])
     s.add_dependency(%q<dm-sqlite-adapter>, [">= 1.0.2"])
