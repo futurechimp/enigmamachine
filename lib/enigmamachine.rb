@@ -254,6 +254,8 @@ class EnigmaMachine < Sinatra::Base
     @encoding_videos = Video.encoding
     @videos_with_errors = Video.with_encode_errors
     @unencoded_videos = Video.unencoded
+    @downloading_videos = Video.downloading
+    @waiting_for_download_videos = Video.waiting_for_download
     erb :'videos/index'
   end
 

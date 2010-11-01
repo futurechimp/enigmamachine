@@ -34,6 +34,20 @@
       </ul>
     <% end %>
 
+    <% unless @downloading_videos.empty? %>
+      <h2>Failed to encode</h2>
+      <ul>
+        <%= partial :"videos/video", :collection => @downloading_videos %>
+      </ul>
+    <% end %>
+
+    <% unless @waiting_for_download_videos.empty? %>
+      <h2>Failed to encode</h2>
+      <ul>
+        <%= partial :"videos/video", :collection => @waiting_for_download_videos %>
+      </ul>
+    <% end %>
+
   </div>
 </div>
 
