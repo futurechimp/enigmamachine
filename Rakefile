@@ -10,7 +10,7 @@ begin
     gem.email = "dave@caprica"
     gem.homepage = "http://github.com/futurechimp/enigmamachine"
     gem.authors = ["Dave Hrycyszyn", "Dmitry Brazhkin"]
-    gem.add_development_dependency "thoughtbot-shoulda"
+    gem.add_development_dependency "shoulda"
     gem.add_development_dependency "rack-test"
     gem.add_dependency "data_mapper", ">=1.0.2"
     gem.add_dependency "dm-sqlite-adapter", ">=1.0.2"
