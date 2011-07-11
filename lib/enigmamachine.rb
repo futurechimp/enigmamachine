@@ -12,6 +12,7 @@ require 'state_machine'
 require 'logger'
 require 'streamio-ffmpeg'
 require 'em-http-request'
+require 'activesupport'
 
 # Extensions to Sinatra
 #
