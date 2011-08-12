@@ -74,7 +74,7 @@ Gem::Specification.new do |s|
     "test/test_enigmamachine.rb",
     "test/test_video.rb"
   ]
-  s.homepage = %q{http://github.com/crm114/enigmamachine}
+  s.homepage = %q{http://github.com/futurechimp/enigmamachine}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.4.2}
   s.summary = %q{A RESTful video encoder.}
