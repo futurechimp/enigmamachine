@@ -52,6 +52,7 @@ class EnigmaMachine < Sinatra::Base
   end
 
   configure :production, :test, :development do
+    DataMapper::Property::String.length(255)
     Video.auto_migrate! unless Video.storage_exists?
     Encoder.auto_migrate! unless Encoder.storage_exists?
     EncodingTask.auto_migrate! unless EncodingTask.storage_exists?
