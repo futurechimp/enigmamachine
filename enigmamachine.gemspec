@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Hrycyszyn", "Dmitry Brazhkin"]
-  s.date = %q{2011-07-11}
+  s.date = %q{2011-09-10}
   s.default_executable = %q{enigmamachine}
   s.description = %q{A RESTful video encoder which you can use as either a front-end to ffmpeg or headless on a server.}
   s.email = %q{dave@caprica}
