@@ -16,7 +16,7 @@ begin
     gem.add_dependency "dm-sqlite-adapter", ">=1.0.2"
     gem.add_dependency "state_machine", ">=0.9.4"
     gem.add_dependency "eventmachine", ">=0.12.10"
-    gem.add_dependency "rack-flash"
+    gem.add_dependency "sinatra-flash"
     gem.add_dependency "ruby-debug"
     gem.add_dependency "sinatra", ">=1.0.0"
     gem.add_dependency "streamio-ffmpeg", ">=0.7.3"
@@ -64,4 +64,3 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
-

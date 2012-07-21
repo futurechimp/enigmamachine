@@ -5,7 +5,7 @@ require 'sinatra/base'
 require 'data_mapper'
 require 'ruby-debug'
 require 'eventmachine'
-require 'rack-flash'
+require 'sinatra/flash'
 require 'dm-validations'
 require 'dm-migrations'
 require 'state_machine'
@@ -91,7 +91,6 @@ class EnigmaMachine < Sinatra::Base
   # Include flash notices
   #
   use Rack::Session::Cookie
-  use Rack::Flash
   use Rack::MethodOverride
 
   # Starts the enigma encoding thread. The thread will be reabsorbed into the
@@ -293,4 +292,3 @@ class EnigmaMachine < Sinatra::Base
   end
 
 end
-
