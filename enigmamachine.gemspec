@@ -4,15 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{enigmamachine}
-  s.version = "0.6.4"
+  s.name = "enigmamachine"
+  s.version = "0.6.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Hrycyszyn", "Dmitry Brazhkin"]
-  s.date = %q{2011-09-10}
-  s.default_executable = %q{enigmamachine}
-  s.description = %q{A RESTful video encoder which you can use as either a front-end to ffmpeg or headless on a server.}
-  s.email = %q{dave@caprica}
+  s.date = "2012-07-21"
+  s.description = "A RESTful video encoder which you can use as either a front-end to ffmpeg or headless on a server."
+  s.email = "dave@caprica"
   s.executables = ["enigmamachine"]
   s.extra_rdoc_files = [
     "LICENSE",
@@ -74,10 +73,10 @@ Gem::Specification.new do |s|
     "test/test_enigmamachine.rb",
     "test/test_video.rb"
   ]
-  s.homepage = %q{http://github.com/futurechimp/enigmamachine}
+  s.homepage = "http://github.com/futurechimp/enigmamachine"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.4.2}
-  s.summary = %q{A RESTful video encoder.}
+  s.rubygems_version = "1.8.24"
+  s.summary = "A RESTful video encoder."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
@@ -89,7 +88,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<dm-sqlite-adapter>, [">= 1.0.2"])
       s.add_runtime_dependency(%q<state_machine>, [">= 0.9.4"])
       s.add_runtime_dependency(%q<eventmachine>, [">= 0.12.10"])
-      s.add_runtime_dependency(%q<rack-flash>, [">= 0"])
+      s.add_runtime_dependency(%q<sinatra-flash>, [">= 0"])
       s.add_runtime_dependency(%q<ruby-debug>, [">= 0"])
       s.add_runtime_dependency(%q<sinatra>, [">= 1.0.0"])
       s.add_runtime_dependency(%q<streamio-ffmpeg>, [">= 0.7.3"])
@@ -103,7 +102,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<dm-sqlite-adapter>, [">= 1.0.2"])
       s.add_dependency(%q<state_machine>, [">= 0.9.4"])
       s.add_dependency(%q<eventmachine>, [">= 0.12.10"])
-      s.add_dependency(%q<rack-flash>, [">= 0"])
+      s.add_dependency(%q<sinatra-flash>, [">= 0"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<sinatra>, [">= 1.0.0"])
       s.add_dependency(%q<streamio-ffmpeg>, [">= 0.7.3"])
@@ -118,7 +117,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<dm-sqlite-adapter>, [">= 1.0.2"])
     s.add_dependency(%q<state_machine>, [">= 0.9.4"])
     s.add_dependency(%q<eventmachine>, [">= 0.12.10"])
-    s.add_dependency(%q<rack-flash>, [">= 0"])
+    s.add_dependency(%q<sinatra-flash>, [">= 0"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<sinatra>, [">= 1.0.0"])
     s.add_dependency(%q<streamio-ffmpeg>, [">= 0.7.3"])
